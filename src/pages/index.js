@@ -8,7 +8,6 @@ import AudioPlayerCard from "../components/AudioPlayerCard"
 const IndexPage = () => (
   <Layout>
     <Seo title="Home" />
-    <h1>Hi people</h1>
     <AudioPlayerCard />
     <p>
       <Link to="/page-2/">Go to page 2</Link> <br />

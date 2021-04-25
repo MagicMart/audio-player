@@ -15,6 +15,7 @@ const PlayerCardStyles = styled.div`
   align-items: center;
   width: 300px;
   padding: 1.45rem;
+  margin: 0 auto;
   border-radius: 10%;
   background: black;
   color: white;

@@ -5,21 +5,25 @@ import { StaticImage } from "gatsby-plugin-image"
 import styled from "styled-components"
 
 const HeaderStyles = styled.header`
-  background: wheat;
-  margin-bottom: 1.45rem;
+  background: whitesmoke;
+  /* margin-bottom: 1.45rem; */
   .inner {
     display: flex;
     margin: 0 auto;
     max-width: 300px;
     /* padding: 1.45rem 1.0875rem; */
+    padding: 10px 0;
   }
   a {
-    color: darkblue;
+    color: black;
+    font-weight: normal;
+    letter-spacing: 1.4px;
     text-decoration: none;
-    font-size: 1.75rem;
+    font-size: 1.5rem;
+    margin-left: 20px;
   }
   img {
-    border-radius: 10%;
+    border-radius: 25%;
   }
 `
 

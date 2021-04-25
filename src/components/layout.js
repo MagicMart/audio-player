@@ -33,10 +33,15 @@ const Layout = ({ children }) => {
           // padding: `0 1.0875rem 1.45rem`,
         }}
       >
-        <main>{children}</main>
+        <main style={{ background: "pink", padding: "1.45rem 0" }}>
+          {children}
+        </main>
         <footer
           style={{
-            marginTop: `2rem`,
+            // marginTop: `2rem`,
+            background: "whitesmoke",
+            textAlign: "center",
+            minHeight: "50vh",
           }}
         >
           © {new Date().getFullYear()}, Built with

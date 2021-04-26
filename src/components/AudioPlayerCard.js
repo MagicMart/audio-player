@@ -44,6 +44,7 @@ const ControlStyles = styled.div`
 `
 
 export default function AudioPlayerCard() {
+  const [isPlaying, setIsPlaying] = React.useState(false)
   return (
     <PlayerCardStyles>
       <StaticImage
@@ -63,7 +64,12 @@ export default function AudioPlayerCard() {
           }}
         >
           <FaStepBackward />
-          <FaPlay />
+          {isPlaying ? (
+            <FaPauseCircle onClick={() => setIsPlaying(c => !c)} />
+          ) : (
+            <FaPlay onClick={() => setIsPlaying(c => !c)} />
+          )}
+
           <FaStepForward />
         </IconContext.Provider>
       </ControlStyles>

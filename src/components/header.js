@@ -35,7 +35,7 @@ const Header = ({ siteTitle }) => (
         width={50}
         quality={95}
         formats={["AUTO", "WEBP", "AVIF"]}
-        alt="Headphones on a desk"
+        alt=""
       />
       <h1 style={{ margin: 0 }}>
         <Link to="/">{siteTitle}</Link>

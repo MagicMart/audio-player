@@ -45,6 +45,44 @@ const ControlStyles = styled.div`
 
 export default function AudioPlayerCard() {
   const [isPlaying, setIsPlaying] = React.useState(false)
+  const [rangeValue, setRangeValue] = React.useState("0")
+  const url =
+    "https://s3.eu-west-2.amazonaws.com/martintudor.net/audio/01-update.mp3"
+  const audioRef = React.useRef(new Audio(url))
+  const timerId = React.useRef()
+
+  const togglePlay = () => {
+    setIsPlaying(c => {
+      c = !c
+      if (c) {
+        audioRef.current.play()
+      } else {
+        audioRef.current.pause()
+      }
+      return c
+    })
+  }
+
+  React.useEffect(() => {
+    if (isPlaying) {
+      timerId.current = setInterval(
+        () => setRangeValue(audioRef.current.currentTime),
+        1000
+      )
+    } else {
+      clearInterval(timerId.current)
+    }
+    console.log("timerId", timerId.current)
+    return () => clearInterval(timerId)
+  }, [isPlaying])
+
+  function handleRangeChange(e) {
+    const value = e.target.value
+    setRangeValue(value)
+    audioRef.current.currentTime = value
+    console.log(value)
+  }
+
   return (
     <PlayerCardStyles>
       <StaticImage
@@ -55,7 +93,7 @@ export default function AudioPlayerCard() {
         alt="Headphones on a desk"
         style={{ marginBottom: `1.45rem` }}
       />
-      <h2>title</h2>
+      <h2>Track 1</h2>
       <ControlStyles>
         <IconContext.Provider
           value={{
@@ -65,15 +103,22 @@ export default function AudioPlayerCard() {
         >
           <FaStepBackward />
           {isPlaying ? (
-            <FaPauseCircle onClick={() => setIsPlaying(c => !c)} />
+            <FaPauseCircle onClick={togglePlay} />
           ) : (
-            <FaPlay onClick={() => setIsPlaying(c => !c)} />
+            <FaPlay onClick={togglePlay} />
           )}
 
           <FaStepForward />
         </IconContext.Provider>
       </ControlStyles>
-      <input type="range" />
+      <input
+        type="range"
+        min="0"
+        max={audioRef.current.duration}
+        step="1"
+        value={rangeValue}
+        onChange={handleRangeChange}
+      />
     </PlayerCardStyles>
   )
 }

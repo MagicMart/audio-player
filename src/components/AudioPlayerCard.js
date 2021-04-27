@@ -9,6 +9,11 @@ import {
 } from "react-icons/fa"
 import { IconContext } from "react-icons"
 
+const urls = [
+  "https://s3.eu-west-2.amazonaws.com/martintudor.net/audio/01-update.mp3",
+  "https://s3.eu-west-2.amazonaws.com/martintudor.net/audio/02-update.mp3",
+]
+
 const PlayerCardStyles = styled.div`
   display: flex;
   flex-direction: column;
@@ -46,18 +51,20 @@ const ControlStyles = styled.div`
 export default function AudioPlayerCard() {
   const [isPlaying, setIsPlaying] = React.useState(false)
   const [rangeValue, setRangeValue] = React.useState("0")
-  const url =
-    "https://s3.eu-west-2.amazonaws.com/martintudor.net/audio/01-update.mp3"
-  const audioRef = React.useRef(new Audio(url))
+  const tracks = React.useRef(urls)
+  // const [nowPlaying, setNowPlaying] = React.useState(() => tracks.current[0])
+
+  const [audioSrc, setAudioSrc] = React.useState(new Audio(tracks.current[0]))
   const timerId = React.useRef()
+  console.log("Duration", audioSrc.duration)
 
   const togglePlay = () => {
     setIsPlaying(c => {
       c = !c
       if (c) {
-        audioRef.current.play()
+        audioSrc.play()
       } else {
-        audioRef.current.pause()
+        audioSrc.pause()
       }
       return c
     })
@@ -65,10 +72,9 @@ export default function AudioPlayerCard() {
 
   React.useEffect(() => {
     if (isPlaying) {
-      timerId.current = setInterval(
-        () => setRangeValue(audioRef.current.currentTime),
-        1000
-      )
+      timerId.current = setInterval(() => {
+        setRangeValue(audioSrc.currentTime)
+      }, 1000)
     } else {
       clearInterval(timerId.current)
     }
@@ -79,7 +85,7 @@ export default function AudioPlayerCard() {
   function handleRangeChange(e) {
     const value = e.target.value
     setRangeValue(value)
-    audioRef.current.currentTime = value
+    audioSrc.currentTime = value
     console.log(value)
   }
 
@@ -111,14 +117,16 @@ export default function AudioPlayerCard() {
           <FaStepForward />
         </IconContext.Provider>
       </ControlStyles>
-      <input
-        type="range"
-        min="0"
-        max={audioRef.current.duration}
-        step="1"
-        value={rangeValue}
-        onChange={handleRangeChange}
-      />
+      {isNaN(audioSrc.duration) ? null : (
+        <input
+          type="range"
+          min="0"
+          max={audioSrc.duration}
+          step="0.01"
+          value={rangeValue}
+          onChange={handleRangeChange}
+        />
+      )}
     </PlayerCardStyles>
   )
 }

@@ -154,7 +154,6 @@ export default function AudioPlayerCard() {
       <StaticImage
         src="../images/headphones.jpg"
         width={150}
-        quality={95}
         formats={["AUTO", "WEBP", "AVIF"]}
         alt="Headphones on a desk"
         style={{ marginBottom: `1.45rem` }}

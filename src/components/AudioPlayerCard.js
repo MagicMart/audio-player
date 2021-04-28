@@ -104,6 +104,8 @@ export default function AudioPlayerCard() {
   const [state, dispatch] = React.useReducer(reducer, initialState)
   const intervalID = useRef()
 
+  console.log("rendered ")
+
   function togglePlay() {
     dispatch({ type: "TOGGLE_PLAY" })
   }
@@ -185,7 +187,7 @@ export default function AudioPlayerCard() {
           type="range"
           min="0"
           max={state.audioSrc.duration}
-          step="0.01"
+          step="1"
           value={state.trackProgress}
           onChange={handleRangeInput}
         />

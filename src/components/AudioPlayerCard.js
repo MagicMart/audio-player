@@ -55,7 +55,7 @@ const ControlStyles = styled.div`
 
 const initialState = {
   isPlaying: false,
-  trackProgress: "0",
+  trackProgress: 0,
   trackNum: 0,
   trackList: urls,
   audioSrc: new Audio(urls[0]),
@@ -66,6 +66,7 @@ const reducer = (state, action) => {
     case "TOGGLE_PLAY":
       return { ...state, isPlaying: !state.isPlaying }
     case "UPDATE_TRACKPROGRESS":
+      console.log("Typeof", typeof state.audioSrc.currentTime)
       return { ...state, trackProgress: state.audioSrc.currentTime }
     case "UPDATE_TRACK":
       state.audioSrc.currentTime = state.audioSrc.duration
@@ -74,7 +75,7 @@ const reducer = (state, action) => {
           ...state,
           audioSrc: new Audio(state.trackList[state.trackNum + 1]),
           trackNum: state.trackNum + 1,
-          trackProgress: "0",
+          trackProgress: 0,
         }
       }
       return { ...state, audioSrc: new Audio(state.trackList[0]), trackNum: 0 }
@@ -85,13 +86,13 @@ const reducer = (state, action) => {
           ...state,
           audioSrc: new Audio(state.trackList[state.trackNum - 1]),
           trackNum: state.trackNum - 1,
-          trackProgress: "0",
+          trackProgress: 0,
         }
       } else {
         state.audioSrc.currentTime = 0
         return {
           ...state,
-          trackProgress: "0",
+          trackProgress: 0,
         }
       }
 

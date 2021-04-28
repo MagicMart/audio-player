@@ -74,6 +74,7 @@ const reducer = (state, action) => {
           ...state,
           audioSrc: new Audio(state.trackList[state.trackNum + 1]),
           trackNum: state.trackNum + 1,
+          trackProgress: "0",
         }
       }
       return { ...state, audioSrc: new Audio(state.trackList[0]), trackNum: 0 }
@@ -84,6 +85,7 @@ const reducer = (state, action) => {
           ...state,
           audioSrc: new Audio(state.trackList[state.trackNum - 1]),
           trackNum: state.trackNum - 1,
+          trackProgress: "0",
         }
       } else {
         state.audioSrc.currentTime = 0

@@ -122,7 +122,6 @@ export default function AudioPlayerCard() {
     if (state.isPlaying) {
       intervalID.current = setInterval(() => {
         if (state.audioSrc.ended) {
-          state.audioSrc.currentTime = state.audioSrc.duration
           dispatch({
             type: "UPDATE_TRACK",
           })

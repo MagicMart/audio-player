@@ -1,5 +1,5 @@
 import { StaticImage } from "gatsby-plugin-image"
-import React from "react"
+import React, { useRef } from "react"
 import styled from "styled-components"
 import {
   FaPlay,
@@ -12,6 +12,7 @@ import { IconContext } from "react-icons"
 const urls = [
   "https://s3.eu-west-2.amazonaws.com/martintudor.net/audio/01-update.mp3",
   "https://s3.eu-west-2.amazonaws.com/martintudor.net/audio/02-update.mp3",
+  "https://s3.eu-west-2.amazonaws.com/martintudor.net/audio/03-update.mp3",
 ]
 
 const PlayerCardStyles = styled.div`
@@ -48,45 +49,84 @@ const ControlStyles = styled.div`
   margin-bottom: 1.45rem;
 `
 
-export default function AudioPlayerCard() {
-  const [isPlaying, setIsPlaying] = React.useState(false)
-  const [rangeValue, setRangeValue] = React.useState("0")
-  const tracks = React.useRef(urls)
-  // const [nowPlaying, setNowPlaying] = React.useState(() => tracks.current[0])
+const initialState = {
+  isPlaying: false,
+  trackProgress: "0",
+  trackNum: 0,
+  trackList: urls,
+  audioSrc: new Audio(urls[0]),
+  scrub: "0",
+}
 
-  const [audioSrc, setAudioSrc] = React.useState(new Audio(tracks.current[0]))
-  const timerId = React.useRef()
-  console.log("Duration", audioSrc.duration)
-
-  const togglePlay = () => {
-    setIsPlaying(c => {
-      c = !c
-      if (c) {
-        audioSrc.play()
-      } else {
-        audioSrc.pause()
+const reducer = (state, action) => {
+  switch (action.type) {
+    case "TOGGLE_PLAY":
+      return { ...state, isPlaying: !state.isPlaying }
+    case "UPDATE_TRACKPROGRESS":
+      return { ...state, trackProgress: action.payload }
+    case "UPDATE_TRACK":
+      state.audioSrc.pause()
+      if (state.trackList[state.trackNum + 1]) {
+        return {
+          ...state,
+          audioSrc: new Audio(state.trackList[state.trackNum + 1]),
+          trackNum: state.trackNum + 1,
+        }
       }
-      return c
-    })
+      return { ...state, audioSrc: new Audio(state.trackList[0]), trackNum: 0 }
+
+    default:
+      throw new Error()
+  }
+}
+
+export default function AudioPlayerCard() {
+  const [state, dispatch] = React.useReducer(reducer, initialState)
+  const intervalID = useRef()
+
+  function togglePlay() {
+    dispatch({ type: "TOGGLE_PLAY" })
+  }
+
+  function forward() {
+    dispatch({ type: "UPDATE_TRACK" })
+  }
+
+  function previous() {
+    dispatch({ type: "PREVIOUS_TRACK" })
   }
 
   React.useEffect(() => {
-    if (isPlaying) {
-      timerId.current = setInterval(() => {
-        setRangeValue(audioSrc.currentTime)
-      }, 1000)
+    if (state.isPlaying) {
+      intervalID.current = setInterval(() => {
+        if (state.audioSrc.ended) {
+          dispatch({
+            type: "UPDATE_TRACK",
+          })
+        }
+        dispatch({
+          type: "UPDATE_TRACKPROGRESS",
+          payload: state.audioSrc.currentTime,
+        })
+      }, 500)
     } else {
-      clearInterval(timerId.current)
+      clearInterval(intervalID.current)
     }
-    console.log("timerId", timerId.current)
-    return () => clearInterval(timerId)
-  }, [isPlaying])
+    return () => clearInterval(intervalID.current)
+  }, [state.isPlaying, state.audioSrc, state.audioSrc.currentTime])
 
-  function handleRangeChange(e) {
-    const value = e.target.value
-    setRangeValue(value)
-    audioSrc.currentTime = value
-    console.log(value)
+  React.useEffect(() => {
+    if (state.isPlaying) {
+      state.audioSrc.play()
+    } else {
+      state.audioSrc.pause()
+    }
+  }, [state.isPlaying, state.audioSrc])
+
+  function handleRangeInput(e) {
+    const { value } = e.target
+    state.audioSrc.currentTime = value
+    dispatch({ type: "UPDATE_TRACKPROGRESS", payload: value })
   }
 
   return (
@@ -99,7 +139,7 @@ export default function AudioPlayerCard() {
         alt="Headphones on a desk"
         style={{ marginBottom: `1.45rem` }}
       />
-      <h2>Track 1</h2>
+      <h2>Track {state.trackNum}</h2>
       <ControlStyles>
         <IconContext.Provider
           value={{
@@ -108,23 +148,23 @@ export default function AudioPlayerCard() {
           }}
         >
           <FaStepBackward />
-          {isPlaying ? (
+          {state.isPlaying ? (
             <FaPauseCircle onClick={togglePlay} />
           ) : (
             <FaPlay onClick={togglePlay} />
           )}
 
-          <FaStepForward />
+          <FaStepForward onClick={forward} />
         </IconContext.Provider>
       </ControlStyles>
-      {isNaN(audioSrc.duration) ? null : (
+      {isNaN(state.audioSrc.duration) ? null : (
         <input
           type="range"
           min="0"
-          max={audioSrc.duration}
+          max={state.audioSrc.duration}
           step="0.01"
-          value={rangeValue}
-          onChange={handleRangeChange}
+          value={state.trackProgress}
+          onChange={handleRangeInput}
         />
       )}
     </PlayerCardStyles>

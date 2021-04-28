@@ -66,7 +66,6 @@ const reducer = (state, action) => {
     case "TOGGLE_PLAY":
       return { ...state, isPlaying: !state.isPlaying }
     case "UPDATE_TRACKPROGRESS":
-      console.log("Typeof", typeof state.audioSrc.currentTime)
       return { ...state, trackProgress: state.audioSrc.currentTime }
     case "UPDATE_TRACK":
       state.audioSrc.currentTime = state.audioSrc.duration

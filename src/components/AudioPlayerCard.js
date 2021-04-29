@@ -8,12 +8,7 @@ import {
   FaStepForward,
 } from "react-icons/fa"
 import { IconContext } from "react-icons"
-
-const urls = [
-  "https://s3.eu-west-2.amazonaws.com/martintudor.net/audio/01-update.mp3",
-  "https://s3.eu-west-2.amazonaws.com/martintudor.net/audio/02-update.mp3",
-  "https://s3.eu-west-2.amazonaws.com/martintudor.net/audio/03-update.mp3",
-]
+import { graphql, useStaticQuery } from "gatsby"
 
 const PlayerCardStyles = styled.div`
   display: flex;
@@ -52,14 +47,6 @@ const ControlStyles = styled.div`
   justify-content: space-evenly;
   margin-bottom: 1.45rem;
 `
-
-const initialState = {
-  isPlaying: false,
-  trackProgress: 0,
-  trackNum: 0,
-  trackList: urls,
-  audioSrc: new Audio(urls[0]),
-}
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -101,10 +88,27 @@ const reducer = (state, action) => {
 }
 
 export default function AudioPlayerCard() {
-  const [state, dispatch] = React.useReducer(reducer, initialState)
+  const { allS3Key } = useStaticQuery(graphql`
+    query S3Keys {
+      allS3Key {
+        nodes {
+          id
+          s3key
+        }
+      }
+    }
+  `)
+  const audioUrls = allS3Key.nodes.map(node => node.s3key)
+  const [state, dispatch] = React.useReducer(reducer, {
+    isPlaying: false,
+    trackProgress: 0,
+    trackNum: 0,
+    trackList: audioUrls,
+    audioSrc: new Audio(audioUrls[0]),
+  })
   const intervalID = useRef()
 
-  console.log("rendered ")
+  console.log(audioUrls)
 
   function togglePlay() {
     dispatch({ type: "TOGGLE_PLAY" })

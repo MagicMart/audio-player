@@ -41,7 +41,6 @@ const Layout = ({ children }) => {
             // marginTop: `2rem`,
             background: "whitesmoke",
             textAlign: "center",
-            minHeight: "50vh",
           }}
         >
           © {new Date().getFullYear()}, Built with

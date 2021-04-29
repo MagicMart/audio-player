@@ -64,7 +64,12 @@ const reducer = (state, action) => {
           trackProgress: 0,
         }
       }
-      return { ...state, audioSrc: new Audio(state.trackList[0]), trackNum: 0 }
+      return {
+        ...state,
+        isPlaying: false,
+        audioSrc: new Audio(state.trackList[0]),
+        trackNum: 0,
+      }
     case "PREVIOUS":
       if (state.trackList[state.trackNum - 1]) {
         state.audioSrc.currentTime = state.audioSrc.duration

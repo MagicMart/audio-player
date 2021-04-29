@@ -109,7 +109,7 @@ export default function AudioPlayerCard() {
     trackProgress: 0,
     trackNum: 0,
     trackList: audioUrls,
-    audioSrc: new Audio(audioUrls[0]),
+    audioSrc: typeof window !== "undefined" && new Audio(audioUrls[0]),
   })
   const intervalID = useRef()
 

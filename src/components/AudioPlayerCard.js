@@ -113,8 +113,6 @@ export default function AudioPlayerCard() {
   })
   const intervalID = useRef()
 
-  console.log(audioUrls)
-
   function togglePlay() {
     dispatch({ type: "TOGGLE_PLAY" })
   }

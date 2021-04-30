@@ -18,7 +18,7 @@ async function fetchS3ObjectKeysAndTurnIntoNodes({
   )
   const s3keys = await res.json()
   console.log(s3keys)
-  s3keys.slice(1).forEach((s3keyRaw, i) => {
+  s3keys.forEach((s3keyRaw, i) => {
     s3key =
       "https://s3.eu-west-2.amazonaws.com/martintudor.net/" +
       s3keyRaw.replace(" ", "+")

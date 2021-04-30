@@ -20,9 +20,6 @@ const PlayerCardStyles = styled.div`
   border-radius: 10%;
   background: black;
   color: white;
-  h2 {
-    font-style: italic;
-  }
   img {
     border-radius: 50%;
   }
@@ -166,7 +163,7 @@ export default function AudioPlayerCard() {
         alt="Headphones on a desk"
         style={{ marginBottom: `1.45rem` }}
       />
-      <h2>
+      <h2 style={{ background: "yellow", color: "black", padding: "5px" }}>
         Track {state.trackNum + 1} of {state.trackList.length}
       </h2>
       <ControlStyles>

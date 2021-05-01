@@ -53,7 +53,7 @@ const reducer = (state, action) => {
     case "UPDATE_TRACKPROGRESS":
       return { ...state, trackProgress: state.audioSrc.currentTime }
     case "UPDATE_TRACK":
-      if (state.isPlaying) state.audioSrc.currentTime = state.audioSrc.duration
+      if (state.isPlaying) state.audioSrc.pause()
       if (state.trackList[state.trackNum + 1]) {
         return {
           ...state,
@@ -70,8 +70,7 @@ const reducer = (state, action) => {
       }
     case "PREVIOUS":
       if (state.trackList[state.trackNum - 1]) {
-        if (state.isPlaying)
-          state.audioSrc.currentTime = state.audioSrc.duration
+        if (state.isPlaying) state.audioSrc.pause()
         return {
           ...state,
           audioSrc: new Audio(state.trackList[state.trackNum - 1]),
@@ -157,7 +156,7 @@ export default function AudioPlayerCard() {
   function handleRangeInput(e) {
     if (!state.audioSrc) return
     const { value } = e.target
-    state.audioSrc.currentTime = value
+    state.audioSrc.currentTime = Number(value)
     dispatch({ type: "UPDATE_TRACKPROGRESS", payload: value })
   }
 
@@ -190,7 +189,9 @@ export default function AudioPlayerCard() {
           <FaStepForward onClick={forward} />
         </IconContext.Provider>
       </ControlStyles>
-      {isNaN(state.audioSrc.duration) || !state.audioSrc ? (
+      {isNaN(state.audioSrc.duration) ||
+      state.audioSrc.duration === +Infinity ||
+      !state.audioSrc ? (
         <div className="input-space"></div>
       ) : (
         <input

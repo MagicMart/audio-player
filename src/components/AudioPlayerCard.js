@@ -20,6 +20,7 @@ const PlayerCardStyles = styled.div`
   border-radius: 10%;
   background: black;
   color: white;
+  border: 10px solid red;
   img {
     border-radius: 50%;
   }

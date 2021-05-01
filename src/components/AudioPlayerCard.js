@@ -112,14 +112,17 @@ export default function AudioPlayerCard() {
   const intervalID = useRef()
 
   function togglePlay() {
+    if (!state.audioSrc) return
     dispatch({ type: "TOGGLE_PLAY" })
   }
 
   function forward() {
+    if (!state.audioSrc) return
     dispatch({ type: "UPDATE_TRACK" })
   }
 
   function previous() {
+    if (!state.audioSrc) return
     dispatch({ type: "PREVIOUS" })
   }
 
@@ -127,6 +130,7 @@ export default function AudioPlayerCard() {
     if (state.isPlaying) {
       intervalID.current = setInterval(() => {
         if (state.audioSrc.ended) {
+          clearInterval(intervalID.current)
           dispatch({
             type: "UPDATE_TRACK",
           })
@@ -150,6 +154,7 @@ export default function AudioPlayerCard() {
   }, [state.isPlaying, state.audioSrc])
 
   function handleRangeInput(e) {
+    if (!state.audioSrc) return
     const { value } = e.target
     state.audioSrc.currentTime = value
     dispatch({ type: "UPDATE_TRACKPROGRESS", payload: value })
@@ -184,7 +189,7 @@ export default function AudioPlayerCard() {
           <FaStepForward onClick={forward} />
         </IconContext.Provider>
       </ControlStyles>
-      {isNaN(state.audioSrc.duration) ? (
+      {isNaN(state.audioSrc.duration) || !state.audioSrc ? (
         <div className="input-space"></div>
       ) : (
         <input

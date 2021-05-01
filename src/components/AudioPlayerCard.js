@@ -52,7 +52,7 @@ const reducer = (state, action) => {
     case "UPDATE_TRACKPROGRESS":
       return { ...state, trackProgress: state.audioSrc.currentTime }
     case "UPDATE_TRACK":
-      state.audioSrc.currentTime = state.audioSrc.duration
+      if (state.isPlaying) state.audioSrc.currentTime = state.audioSrc.duration
       if (state.trackList[state.trackNum + 1]) {
         return {
           ...state,
@@ -69,7 +69,8 @@ const reducer = (state, action) => {
       }
     case "PREVIOUS":
       if (state.trackList[state.trackNum - 1]) {
-        state.audioSrc.currentTime = state.audioSrc.duration
+        if (state.isPlaying)
+          state.audioSrc.currentTime = state.audioSrc.duration
         return {
           ...state,
           audioSrc: new Audio(state.trackList[state.trackNum - 1]),
@@ -77,7 +78,7 @@ const reducer = (state, action) => {
           trackProgress: 0,
         }
       } else {
-        state.audioSrc.currentTime = 0
+        if (state.isPlaying) state.audioSrc.currentTime = 0
         return {
           ...state,
           trackProgress: 0,

@@ -48,6 +48,8 @@ const ControlStyles = styled.div`
 
 const reducer = (state, action) => {
   switch (action.type) {
+    case "INITIAL_AUDIO":
+      return { ...state, audioSrc: action.payload }
     case "TOGGLE_PLAY":
       return { ...state, isPlaying: !state.isPlaying }
     case "UPDATE_TRACKPROGRESS":
@@ -107,7 +109,7 @@ export default function AudioPlayerCard() {
     trackProgress: 0,
     trackNum: 0,
     trackList: audioUrls,
-    audioSrc: typeof window !== "undefined" && new Audio(audioUrls[0]),
+    audioSrc: null,
   })
   const intervalID = useRef()
 
@@ -127,6 +129,15 @@ export default function AudioPlayerCard() {
   }
 
   React.useEffect(() => {
+    if (!state.trackList) return
+    dispatch({
+      type: "INITIAL_AUDIO",
+      payload: new Audio(state.trackList[0]),
+    })
+  }, [state.trackList])
+
+  React.useEffect(() => {
+    if (!state.audioSrc) return
     if (state.isPlaying) {
       intervalID.current = setInterval(() => {
         if (state.audioSrc.ended) {
@@ -146,6 +157,7 @@ export default function AudioPlayerCard() {
   }, [state.isPlaying, state.audioSrc])
 
   React.useEffect(() => {
+    if (!state.audioSrc) return
     if (state.isPlaying) {
       state.audioSrc.play()
     } else {
@@ -189,9 +201,9 @@ export default function AudioPlayerCard() {
           <FaStepForward onClick={forward} />
         </IconContext.Provider>
       </ControlStyles>
-      {isNaN(state.audioSrc.duration) ||
-      state.audioSrc.duration === +Infinity ||
-      !state.audioSrc ? (
+      {!state.audioSrc ||
+      isNaN(state.audioSrc.duration) ||
+      state.audioSrc.duration === +Infinity ? (
         <div className="input-space"></div>
       ) : (
         <input

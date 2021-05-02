@@ -9,6 +9,7 @@ import {
 } from "react-icons/fa"
 import { IconContext } from "react-icons"
 import { graphql, useStaticQuery } from "gatsby"
+import { setItem, getItem } from "../utils/localStorage"
 
 const PlayerCardStyles = styled.div`
   display: flex;
@@ -49,7 +50,8 @@ const ControlStyles = styled.div`
 const reducer = (state, action) => {
   switch (action.type) {
     case "INITIAL_AUDIO":
-      return { ...state, audioSrc: action.payload }
+      const { audioSrc, trackNum } = action.payload
+      return { ...state, audioSrc, trackNum }
     case "TOGGLE_PLAY":
       return { ...state, isPlaying: !state.isPlaying }
     case "UPDATE_TRACKPROGRESS":
@@ -130,9 +132,16 @@ export default function AudioPlayerCard() {
 
   React.useEffect(() => {
     if (!state.trackList) return
+    let newAudio
+    const { audioStore, trackStoreNum } = getItem()
+    if (audioStore === state.trackList[trackStoreNum]) {
+      newAudio = new Audio(state.trackList[trackStoreNum])
+    } else {
+      newAudio = new Audio(state.trackList[0])
+    }
     dispatch({
       type: "INITIAL_AUDIO",
-      payload: new Audio(state.trackList[0]),
+      payload: { audioSrc: newAudio, trackNum: trackStoreNum || 0 },
     })
   }, [state.trackList])
 
@@ -153,7 +162,9 @@ export default function AudioPlayerCard() {
     } else {
       clearInterval(intervalID.current)
     }
-    return () => clearInterval(intervalID.current)
+    return () => {
+      clearInterval(intervalID.current)
+    }
   }, [state.isPlaying, state.audioSrc])
 
   React.useEffect(() => {
@@ -164,6 +175,14 @@ export default function AudioPlayerCard() {
       state.audioSrc.pause()
     }
   }, [state.isPlaying, state.audioSrc])
+
+  React.useEffect(() => {
+    if (!state.trackList) return
+    setItem({
+      audioStore: state.trackList[state.trackNum],
+      trackStoreNum: state.trackNum,
+    })
+  }, [state.trackList, state.trackNum])
 
   function handleRangeInput(e) {
     if (!state.audioSrc) return

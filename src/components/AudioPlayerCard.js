@@ -132,12 +132,14 @@ export default function AudioPlayerCard() {
 
   React.useEffect(() => {
     let newAudio
-    const { audioStore, trackStoreNum } = getItem()
-    if (audioStore === state.trackList[trackStoreNum]) {
-      newAudio = new Audio(state.trackList[trackStoreNum])
-    } else {
-      newAudio = new Audio(state.trackList[0])
-    }
+    // const { audioStore, trackStoreNum } = getItem()
+    // if (audioStore === state.trackList[trackStoreNum]) {
+    //   newAudio = new Audio(state.trackList[trackStoreNum])
+    // } else {
+    //   newAudio = new Audio(state.trackList[0])
+    // }
+    newAudio = new Audio(state.trackList[0])
+    const trackStoreNum = 0
     dispatch({
       type: "INITIAL_AUDIO",
       payload: { audioSrc: newAudio, trackNum: trackStoreNum || 0 },

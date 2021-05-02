@@ -131,7 +131,6 @@ export default function AudioPlayerCard() {
   }
 
   React.useEffect(() => {
-    if (!state.trackList) return
     let newAudio
     const { audioStore, trackStoreNum } = getItem()
     if (audioStore === state.trackList[trackStoreNum]) {

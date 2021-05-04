@@ -3,7 +3,8 @@ function setItem(params) {
 }
 
 function getItem() {
-  return JSON.parse(window?.localStorage.getItem("updatestoke")) || {}
+  if (typeof window === "undefined") return
+  return JSON.parse(localStorage.getItem("updatestoke")) || {}
 }
 
 export { setItem, getItem }

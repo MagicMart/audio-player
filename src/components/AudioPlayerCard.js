@@ -105,12 +105,11 @@ export default function AudioPlayerCard() {
       }
     }
   `)
-  const audioUrls = allS3Key.nodes.map(node => node.s3key)
   const [state, dispatch] = React.useReducer(reducer, {
     isPlaying: false,
     trackProgress: 0,
     trackNum: 0,
-    trackList: audioUrls,
+    trackList: allS3Key.nodes.map(node => node.s3key),
     audioSrc: null,
   })
   const intervalID = useRef()

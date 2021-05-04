@@ -111,7 +111,7 @@ export default function AudioPlayerCard() {
     trackNum: 0,
     trackList: allS3Key.nodes.map(node => node.s3key),
     audioSrc: null,
-    localStorage: getItem(),
+    localStorage: typeof window !== "undefined" && getItem(),
   })
   const intervalID = useRef()
 

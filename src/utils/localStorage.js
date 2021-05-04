@@ -3,7 +3,7 @@ function setItem(params) {
 }
 
 function getItem() {
-  return JSON.parse(window.localStorage.getItem("updatestoke")) || {}
+  return JSON.parse(window?.localStorage.getItem("updatestoke")) || {}
 }
 
 export { setItem, getItem }

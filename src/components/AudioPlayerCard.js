@@ -111,6 +111,7 @@ export default function AudioPlayerCard() {
     trackNum: 0,
     trackList: allS3Key.nodes.map(node => node.s3key),
     audioSrc: null,
+    localStorage: getItem(),
   })
   const intervalID = useRef()
 
@@ -131,19 +132,19 @@ export default function AudioPlayerCard() {
 
   React.useEffect(() => {
     let newAudio
-    // const { audioStore, trackStoreNum } = getItem()
-    // if (audioStore === state.trackList[trackStoreNum]) {
-    //   newAudio = new Audio(state.trackList[trackStoreNum])
-    // } else {
-    //   newAudio = new Audio(state.trackList[0])
-    // }
-    newAudio = new Audio(state.trackList[0])
-    const trackStoreNum = 0
+    const { audioStore, trackStoreNum } = state.localStorage
+    if (audioStore && audioStore === state.trackList[trackStoreNum]) {
+      newAudio = new Audio(state.trackList[trackStoreNum])
+    } else {
+      newAudio = new Audio(state.trackList[0])
+    }
+    // newAudio = new Audio(state.trackList[0])
+    // const trackStoreNum = 0
     dispatch({
       type: "INITIAL_AUDIO",
       payload: { audioSrc: newAudio, trackNum: trackStoreNum || 0 },
     })
-  }, [state.trackList])
+  }, [state.trackList, state.localStorage])
 
   React.useEffect(() => {
     if (!state.audioSrc) return

@@ -164,6 +164,7 @@ export default function AudioPlayerCard() {
       clearInterval(intervalID.current)
     }
     return () => {
+      state.audioSrc.pause()
       clearInterval(intervalID.current)
     }
   }, [state.isPlaying, state.audioSrc])

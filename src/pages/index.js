@@ -7,7 +7,7 @@ import AudioPlayerCard from "../components/AudioPlayerCard"
 
 const IndexPage = () => (
   <Layout>
-    <Seo title="Home" />
+    <Seo title="Audio" />
     <AudioPlayerCard />
   </Layout>
 )

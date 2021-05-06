@@ -3,24 +3,30 @@ import PropTypes from "prop-types"
 import { Link } from "gatsby"
 import { StaticImage } from "gatsby-plugin-image"
 import styled from "styled-components"
+import { MdMenu } from "react-icons/md"
 
 const HeaderStyles = styled.header`
   background: whitesmoke;
   /* margin-bottom: 1.45rem; */
+  padding: 10px 0;
   .inner {
     display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin: 0 auto;
     max-width: 300px;
     /* padding: 1.45rem 1.0875rem; */
-    padding: 10px 0;
+  }
+  h1 {
+    margin: 0;
   }
   a {
+    display: flex;
+    align-items: center;
     color: black;
-    font-weight: normal;
     letter-spacing: 1.4px;
     text-decoration: none;
-    font-size: 1.5rem;
-    margin-left: 20px;
+    font-size: 1.3rem;
   }
   img {
     border-radius: 25%;
@@ -33,15 +39,18 @@ const Header = ({ siteTitle }) => (
       <StaticImage
         src="../images/updatelogo.png"
         width={50}
-        quality={95}
+        quality={100}
         formats={["AUTO", "WEBP", "AVIF"]}
         alt=""
       />
-      <h1 style={{ margin: 0 }}>
-        <Link to="/" style={{ background: "yellow" }}>
-          {siteTitle}
+      <h1 style={{ display: "flex", alignItems: "center" }}>
+        <Link to="/">
+          <mark>{siteTitle}</mark>
         </Link>
       </h1>
+      <Link to="/menu">
+        <MdMenu size="45" />
+      </Link>
     </div>
   </HeaderStyles>
 )

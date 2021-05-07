@@ -50,18 +50,18 @@ const ControlStyles = styled.div`
 const reducer = (state, action) => {
   switch (action.type) {
     case "INITIAL_AUDIO":
-      const { audioSrc, trackNum } = action.payload
-      return { ...state, audioSrc, trackNum }
+      const { audioElement, trackNum } = action.payload
+      return { ...state, audioElement, trackNum }
     case "TOGGLE_PLAY":
       return { ...state, isPlaying: !state.isPlaying }
     case "UPDATE_TRACKPROGRESS":
-      return { ...state, trackProgress: state.audioSrc.currentTime }
+      return { ...state, trackProgress: state.audioElement.currentTime }
     case "UPDATE_TRACK":
-      if (state.isPlaying) state.audioSrc.pause()
+      if (state.isPlaying) state.audioElement.pause()
       if (state.trackList[state.trackNum + 1]) {
         return {
           ...state,
-          audioSrc: new Audio(state.trackList[state.trackNum + 1]),
+          audioElement: new Audio(state.trackList[state.trackNum + 1]),
           trackNum: state.trackNum + 1,
           trackProgress: 0,
         }
@@ -69,20 +69,20 @@ const reducer = (state, action) => {
       return {
         ...state,
         isPlaying: false,
-        audioSrc: new Audio(state.trackList[0]),
+        audioElement: new Audio(state.trackList[0]),
         trackNum: 0,
       }
     case "PREVIOUS":
       if (state.trackList[state.trackNum - 1]) {
-        if (state.isPlaying) state.audioSrc.pause()
+        if (state.isPlaying) state.audioElement.pause()
         return {
           ...state,
-          audioSrc: new Audio(state.trackList[state.trackNum - 1]),
+          audioElement: new Audio(state.trackList[state.trackNum - 1]),
           trackNum: state.trackNum - 1,
           trackProgress: 0,
         }
       } else {
-        if (state.isPlaying) state.audioSrc.currentTime = 0
+        if (state.isPlaying) state.audioElement.currentTime = 0
         return {
           ...state,
           trackProgress: 0,
@@ -110,23 +110,23 @@ export default function AudioPlayerCard() {
     trackProgress: 0,
     trackNum: 0,
     trackList: allS3Key.nodes.map(node => node.s3key),
-    audioSrc: null,
+    audioElement: null,
     localStorage: typeof window !== "undefined" && getItem(),
   })
   const intervalID = useRef()
 
   function togglePlay() {
-    if (!state.audioSrc) return
+    if (!state.audioElement) return
     dispatch({ type: "TOGGLE_PLAY" })
   }
 
   function forward() {
-    if (!state.audioSrc) return
+    if (!state.audioElement) return
     dispatch({ type: "UPDATE_TRACK" })
   }
 
   function previous() {
-    if (!state.audioSrc) return
+    if (!state.audioElement) return
     dispatch({ type: "PREVIOUS" })
   }
 
@@ -142,15 +142,15 @@ export default function AudioPlayerCard() {
     // const trackStoreNum = 0
     dispatch({
       type: "INITIAL_AUDIO",
-      payload: { audioSrc: lastListenedTo, trackNum: trackStoreNum },
+      payload: { audioElement: lastListenedTo, trackNum: trackStoreNum },
     })
   }, [state.trackList, state.localStorage])
 
   React.useEffect(() => {
-    if (!state.audioSrc) return
+    if (!state.audioElement) return
     if (state.isPlaying) {
       intervalID.current = setInterval(() => {
-        if (state.audioSrc.ended) {
+        if (state.audioElement.ended) {
           clearInterval(intervalID.current)
           dispatch({
             type: "UPDATE_TRACK",
@@ -164,19 +164,19 @@ export default function AudioPlayerCard() {
       clearInterval(intervalID.current)
     }
     return () => {
-      state.audioSrc.pause()
+      state.audioElement.pause()
       clearInterval(intervalID.current)
     }
-  }, [state.isPlaying, state.audioSrc])
+  }, [state.isPlaying, state.audioElement])
 
   React.useEffect(() => {
-    if (!state.audioSrc) return
+    if (!state.audioElement) return
     if (state.isPlaying) {
-      state.audioSrc.play()
+      state.audioElement.play()
     } else {
-      state.audioSrc.pause()
+      state.audioElement.pause()
     }
-  }, [state.isPlaying, state.audioSrc])
+  }, [state.isPlaying, state.audioElement])
 
   React.useEffect(() => {
     if (!state.trackList) return
@@ -187,9 +187,9 @@ export default function AudioPlayerCard() {
   }, [state.trackList, state.trackNum])
 
   function handleRangeInput(e) {
-    if (!state.audioSrc) return
+    if (!state.audioElement) return
     const { value } = e.target
-    state.audioSrc.currentTime = Number(value)
+    state.audioElement.currentTime = Number(value)
     dispatch({ type: "UPDATE_TRACKPROGRESS", payload: value })
   }
 
@@ -222,15 +222,15 @@ export default function AudioPlayerCard() {
           <FaStepForward onClick={forward} />
         </IconContext.Provider>
       </ControlStyles>
-      {!state.audioSrc ||
-      isNaN(state.audioSrc.duration) ||
-      state.audioSrc.duration === +Infinity ? (
+      {!state.audioElement ||
+      isNaN(state.audioElement.duration) ||
+      state.audioElement.duration === +Infinity ? (
         <div className="input-space"></div>
       ) : (
         <input
           type="range"
           min="0"
-          max={state.audioSrc.duration}
+          max={state.audioElement.duration}
           step="1"
           value={state.trackProgress}
           onChange={handleRangeInput}

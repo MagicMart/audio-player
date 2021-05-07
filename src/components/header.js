@@ -36,6 +36,15 @@ const HeaderStyles = styled.header`
 const Header = ({ siteTitle }) => (
   <HeaderStyles>
     <div className="inner">
+      <Link to="/menu">
+        <MdMenu size="45" />
+      </Link>
+
+      <h1 style={{ display: "flex", alignItems: "center" }}>
+        <Link to="/">
+          <mark>{siteTitle}</mark>
+        </Link>
+      </h1>
       <StaticImage
         src="../images/updatelogo.png"
         width={50}
@@ -43,14 +52,6 @@ const Header = ({ siteTitle }) => (
         formats={["AUTO", "WEBP", "AVIF"]}
         alt=""
       />
-      <h1 style={{ display: "flex", alignItems: "center" }}>
-        <Link to="/">
-          <mark>{siteTitle}</mark>
-        </Link>
-      </h1>
-      <Link to="/menu">
-        <MdMenu size="45" />
-      </Link>
     </div>
   </HeaderStyles>
 )

@@ -56,7 +56,7 @@ const reducer = (state, action) => {
       return { ...state, isPlaying: !state.isPlaying }
     case "UPDATE_TRACKPROGRESS":
       return { ...state, trackProgress: action.payload }
-    case "UPDATE_TRACK":
+    case "UPDATE_AUDIO_ELEMENT":
       if (state.audioUrlList[state.currentTrackNum + 1]) {
         return {
           ...state,
@@ -125,7 +125,7 @@ export default function AudioPlayerCard() {
   function forward() {
     if (!state.audioElement) return
     if (state.isPlaying) state.audioElement.pause()
-    dispatch({ type: "UPDATE_TRACK" })
+    dispatch({ type: "UPDATE_AUDIO_ELEMENT" })
   }
 
   function previous() {
@@ -163,7 +163,7 @@ export default function AudioPlayerCard() {
         if (state.audioElement.ended) {
           clearInterval(intervalID.current)
           dispatch({
-            type: "UPDATE_TRACK",
+            type: "UPDATE_AUDIO_ELEMENT",
           })
         }
         dispatch({

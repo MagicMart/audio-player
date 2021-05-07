@@ -50,19 +50,21 @@ const ControlStyles = styled.div`
 const reducer = (state, action) => {
   switch (action.type) {
     case "INITIAL_AUDIO":
-      const { audioElement, trackNum } = action.payload
-      return { ...state, audioElement, trackNum }
+      const { audioElement, currentTrackNum } = action.payload
+      return { ...state, audioElement, currentTrackNum }
     case "TOGGLE_PLAY":
       return { ...state, isPlaying: !state.isPlaying }
     case "UPDATE_TRACKPROGRESS":
       return { ...state, trackProgress: state.audioElement.currentTime }
     case "UPDATE_TRACK":
       if (state.isPlaying) state.audioElement.pause()
-      if (state.audioUrlList[state.trackNum + 1]) {
+      if (state.audioUrlList[state.currentTrackNum + 1]) {
         return {
           ...state,
-          audioElement: new Audio(state.audioUrlList[state.trackNum + 1]),
-          trackNum: state.trackNum + 1,
+          audioElement: new Audio(
+            state.audioUrlList[state.currentTrackNum + 1]
+          ),
+          currentTrackNum: state.currentTrackNum + 1,
           trackProgress: 0,
         }
       }
@@ -70,15 +72,17 @@ const reducer = (state, action) => {
         ...state,
         isPlaying: false,
         audioElement: new Audio(state.audioUrlList[0]),
-        trackNum: 0,
+        currentTrackNum: 0,
       }
     case "PREVIOUS":
-      if (state.audioUrlList[state.trackNum - 1]) {
+      if (state.audioUrlList[state.currentTrackNum - 1]) {
         if (state.isPlaying) state.audioElement.pause()
         return {
           ...state,
-          audioElement: new Audio(state.audioUrlList[state.trackNum - 1]),
-          trackNum: state.trackNum - 1,
+          audioElement: new Audio(
+            state.audioUrlList[state.currentTrackNum - 1]
+          ),
+          currentTrackNum: state.currentTrackNum - 1,
           trackProgress: 0,
         }
       } else {
@@ -108,7 +112,7 @@ export default function AudioPlayerCard() {
   const [state, dispatch] = React.useReducer(reducer, {
     isPlaying: false,
     trackProgress: 0,
-    trackNum: 0,
+    currentTrackNum: 0,
     audioUrlList: allS3Key.nodes.map(node => node.s3key),
     audioElement: null,
     localStorage: typeof window !== "undefined" && getItem(),
@@ -145,7 +149,10 @@ export default function AudioPlayerCard() {
     // const storedTrackNum = 0
     dispatch({
       type: "INITIAL_AUDIO",
-      payload: { audioElement: lastListenedTo, trackNum: storedTrackNum },
+      payload: {
+        audioElement: lastListenedTo,
+        currentTrackNum: storedTrackNum,
+      },
     })
   }, [state.audioUrlList, state.localStorage])
 
@@ -184,10 +191,10 @@ export default function AudioPlayerCard() {
   React.useEffect(() => {
     if (!state.audioUrlList) return
     setItem({
-      storedAudioURL: state.audioUrlList[state.trackNum],
-      storedTrackNum: state.trackNum,
+      storedAudioURL: state.audioUrlList[state.currentTrackNum],
+      storedTrackNum: state.currentTrackNum,
     })
-  }, [state.audioUrlList, state.trackNum])
+  }, [state.audioUrlList, state.currentTrackNum])
 
   function handleRangeInput(e) {
     if (!state.audioElement) return
@@ -206,7 +213,7 @@ export default function AudioPlayerCard() {
         style={{ marginBottom: `1.45rem` }}
       />
       <h2 style={{ background: "yellow", color: "black", padding: "5px" }}>
-        Track {state.trackNum + 1} of {state.audioUrlList.length}
+        Track {state.currentTrackNum + 1} of {state.audioUrlList.length}
       </h2>
       <ControlStyles>
         <IconContext.Provider

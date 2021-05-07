@@ -55,9 +55,8 @@ const reducer = (state, action) => {
     case "TOGGLE_PLAY":
       return { ...state, isPlaying: !state.isPlaying }
     case "UPDATE_TRACKPROGRESS":
-      return { ...state, trackProgress: state.audioElement.currentTime }
+      return { ...state, trackProgress: action.payload }
     case "UPDATE_TRACK":
-      if (state.isPlaying) state.audioElement.pause()
       if (state.audioUrlList[state.currentTrackNum + 1]) {
         return {
           ...state,
@@ -76,7 +75,6 @@ const reducer = (state, action) => {
       }
     case "PREVIOUS":
       if (state.audioUrlList[state.currentTrackNum - 1]) {
-        if (state.isPlaying) state.audioElement.pause()
         return {
           ...state,
           audioElement: new Audio(
@@ -126,11 +124,13 @@ export default function AudioPlayerCard() {
 
   function forward() {
     if (!state.audioElement) return
+    if (state.isPlaying) state.audioElement.pause()
     dispatch({ type: "UPDATE_TRACK" })
   }
 
   function previous() {
     if (!state.audioElement) return
+    if (state.isPlaying) state.audioElement.pause()
     dispatch({ type: "PREVIOUS" })
   }
 
@@ -168,6 +168,7 @@ export default function AudioPlayerCard() {
         }
         dispatch({
           type: "UPDATE_TRACKPROGRESS",
+          payload: state.audioElement.currentTime,
         })
       }, 500)
     } else {

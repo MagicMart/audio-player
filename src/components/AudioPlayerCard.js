@@ -58,10 +58,10 @@ const reducer = (state, action) => {
       return { ...state, trackProgress: state.audioElement.currentTime }
     case "UPDATE_TRACK":
       if (state.isPlaying) state.audioElement.pause()
-      if (state.trackList[state.trackNum + 1]) {
+      if (state.audioUrlList[state.trackNum + 1]) {
         return {
           ...state,
-          audioElement: new Audio(state.trackList[state.trackNum + 1]),
+          audioElement: new Audio(state.audioUrlList[state.trackNum + 1]),
           trackNum: state.trackNum + 1,
           trackProgress: 0,
         }
@@ -69,15 +69,15 @@ const reducer = (state, action) => {
       return {
         ...state,
         isPlaying: false,
-        audioElement: new Audio(state.trackList[0]),
+        audioElement: new Audio(state.audioUrlList[0]),
         trackNum: 0,
       }
     case "PREVIOUS":
-      if (state.trackList[state.trackNum - 1]) {
+      if (state.audioUrlList[state.trackNum - 1]) {
         if (state.isPlaying) state.audioElement.pause()
         return {
           ...state,
-          audioElement: new Audio(state.trackList[state.trackNum - 1]),
+          audioElement: new Audio(state.audioUrlList[state.trackNum - 1]),
           trackNum: state.trackNum - 1,
           trackProgress: 0,
         }
@@ -109,7 +109,7 @@ export default function AudioPlayerCard() {
     isPlaying: false,
     trackProgress: 0,
     trackNum: 0,
-    trackList: allS3Key.nodes.map(node => node.s3key),
+    audioUrlList: allS3Key.nodes.map(node => node.s3key),
     audioElement: null,
     localStorage: typeof window !== "undefined" && getItem(),
   })
@@ -132,19 +132,22 @@ export default function AudioPlayerCard() {
 
   React.useEffect(() => {
     let lastListenedTo
-    const { audioStore, trackStoreNum = 0 } = state.localStorage
-    if (audioStore && audioStore === state.trackList[trackStoreNum]) {
-      lastListenedTo = new Audio(state.trackList[trackStoreNum])
+    const { storedAudioURL, storedTrackNum = 0 } = state.localStorage
+    if (
+      storedAudioURL &&
+      storedAudioURL === state.audioUrlList[storedTrackNum]
+    ) {
+      lastListenedTo = new Audio(state.audioUrlList[storedTrackNum])
     } else {
-      lastListenedTo = new Audio(state.trackList[0])
+      lastListenedTo = new Audio(state.audioUrlList[0])
     }
-    // lastListenedTo = new Audio(state.trackList[0])
-    // const trackStoreNum = 0
+    // lastListenedTo = new Audio(state.audioUrlList[0])
+    // const storedTrackNum = 0
     dispatch({
       type: "INITIAL_AUDIO",
-      payload: { audioElement: lastListenedTo, trackNum: trackStoreNum },
+      payload: { audioElement: lastListenedTo, trackNum: storedTrackNum },
     })
-  }, [state.trackList, state.localStorage])
+  }, [state.audioUrlList, state.localStorage])
 
   React.useEffect(() => {
     if (!state.audioElement) return
@@ -179,12 +182,12 @@ export default function AudioPlayerCard() {
   }, [state.isPlaying, state.audioElement])
 
   React.useEffect(() => {
-    if (!state.trackList) return
+    if (!state.audioUrlList) return
     setItem({
-      audioStore: state.trackList[state.trackNum],
-      trackStoreNum: state.trackNum,
+      storedAudioURL: state.audioUrlList[state.trackNum],
+      storedTrackNum: state.trackNum,
     })
-  }, [state.trackList, state.trackNum])
+  }, [state.audioUrlList, state.trackNum])
 
   function handleRangeInput(e) {
     if (!state.audioElement) return
@@ -203,7 +206,7 @@ export default function AudioPlayerCard() {
         style={{ marginBottom: `1.45rem` }}
       />
       <h2 style={{ background: "yellow", color: "black", padding: "5px" }}>
-        Track {state.trackNum + 1} of {state.trackList.length}
+        Track {state.trackNum + 1} of {state.audioUrlList.length}
       </h2>
       <ControlStyles>
         <IconContext.Provider

@@ -131,18 +131,18 @@ export default function AudioPlayerCard() {
   }
 
   React.useEffect(() => {
-    let newAudio
-    const { audioStore, trackStoreNum } = state.localStorage
+    let lastListenedTo
+    const { audioStore, trackStoreNum = 0 } = state.localStorage
     if (audioStore && audioStore === state.trackList[trackStoreNum]) {
-      newAudio = new Audio(state.trackList[trackStoreNum])
+      lastListenedTo = new Audio(state.trackList[trackStoreNum])
     } else {
-      newAudio = new Audio(state.trackList[0])
+      lastListenedTo = new Audio(state.trackList[0])
     }
-    // newAudio = new Audio(state.trackList[0])
+    // lastListenedTo = new Audio(state.trackList[0])
     // const trackStoreNum = 0
     dispatch({
       type: "INITIAL_AUDIO",
-      payload: { audioSrc: newAudio, trackNum: trackStoreNum || 0 },
+      payload: { audioSrc: lastListenedTo, trackNum: trackStoreNum },
     })
   }, [state.trackList, state.localStorage])
 

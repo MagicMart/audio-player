@@ -53,10 +53,13 @@ const reducer = (state, action) => {
       const { audioElement, currentTrackNum } = action.payload
       return { ...state, audioElement, currentTrackNum }
     case "TOGGLE_PLAY":
+      if (!state.audioElement) return
       return { ...state, isPlaying: !state.isPlaying }
     case "UPDATE_TRACKPROGRESS":
       return { ...state, trackProgress: action.payload }
     case "UPDATE_AUDIO_ELEMENT":
+      if (!state.audioElement) return
+      if (state.isPlaying) state.audioElement.pause()
       if (state.audioUrlList[state.currentTrackNum + 1]) {
         return {
           ...state,
@@ -74,6 +77,7 @@ const reducer = (state, action) => {
         currentTrackNum: 0,
       }
     case "PREVIOUS":
+      if (!state.audioElement) return
       if (state.audioUrlList[state.currentTrackNum - 1]) {
         return {
           ...state,
@@ -118,19 +122,14 @@ export default function AudioPlayerCard() {
   const intervalID = useRef()
 
   function togglePlay() {
-    if (!state.audioElement) return
     dispatch({ type: "TOGGLE_PLAY" })
   }
 
   function forward() {
-    if (!state.audioElement) return
-    if (state.isPlaying) state.audioElement.pause()
     dispatch({ type: "UPDATE_AUDIO_ELEMENT" })
   }
 
   function previous() {
-    if (!state.audioElement) return
-    if (state.isPlaying && state.currentTrackNum > 0) state.audioElement.pause()
     dispatch({ type: "PREVIOUS" })
   }
 

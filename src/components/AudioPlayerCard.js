@@ -130,7 +130,7 @@ export default function AudioPlayerCard() {
 
   function previous() {
     if (!state.audioElement) return
-    if (state.isPlaying) state.audioElement.pause()
+    if (state.isPlaying && state.currentTrackNum > 0) state.audioElement.pause()
     dispatch({ type: "PREVIOUS" })
   }
 

@@ -3,6 +3,7 @@ module.exports = {
     title: `Update Stoke`,
     description: `A Talking newspaper for those with sightloss.`,
     author: `@martintudoruk`,
+    siteURL: `https://audio.martintudor.com`,
   },
   plugins: [
     `gatsby-plugin-react-helmet`,

@@ -57,6 +57,7 @@ const reducer = (state, action) => {
     case "UPDATE_TRACKPROGRESS":
       return { ...state, trackProgress: action.payload }
     case "UPDATE_AUDIO_ELEMENT":
+      // check if there is a next element in the audioUrlList array
       if (state.audioUrlList[state.currentTrackNum + 1]) {
         return {
           ...state,
@@ -67,6 +68,7 @@ const reducer = (state, action) => {
           trackProgress: 0,
         }
       }
+      // if there are no more elements got to first element
       return {
         ...state,
         isPlaying: false,
@@ -84,7 +86,7 @@ const reducer = (state, action) => {
           trackProgress: 0,
         }
       } else {
-        if (state.isPlaying) state.audioElement.currentTime = 0
+        // if (state.isPlaying) state.audioElement.currentTime = 0
         return {
           ...state,
           trackProgress: 0,
@@ -130,7 +132,11 @@ export default function AudioPlayerCard() {
 
   function previous() {
     if (!state.audioElement) return
-    if (state.isPlaying && state.currentTrackNum > 0) state.audioElement.pause()
+    if (state.isPlaying && state.currentTrackNum > 0) {
+      state.audioElement.pause()
+    } else {
+      state.audioElement.currentTime = 0
+    }
     dispatch({ type: "PREVIOUS" })
   }
 

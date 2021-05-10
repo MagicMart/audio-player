@@ -229,14 +229,26 @@ export default function AudioPlayerCard() {
             size: "50px",
           }}
         >
-          <FaStepBackward onClick={previous} />
+          <FaStepBackward
+            onClick={previous}
+            tabIndex="0"
+            aria-label="previous track"
+          />
           {state.isPlaying ? (
-            <FaPauseCircle onClick={togglePlay} />
+            <FaPauseCircle
+              onClick={togglePlay}
+              tabIndex="0"
+              aria-label="pause audio"
+            />
           ) : (
-            <FaPlay onClick={togglePlay} />
+            <FaPlay onClick={togglePlay} tabIndex="0" aria-label="play audio" />
           )}
 
-          <FaStepForward onClick={forward} />
+          <FaStepForward
+            onClick={forward}
+            tabIndex="0"
+            aria-label="next track"
+          />
         </IconContext.Provider>
       </ControlStyles>
       {!state.audioElement ||

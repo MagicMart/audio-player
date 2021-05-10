@@ -22,7 +22,7 @@ const MenuStyles = styled.main`
   .menu {
     position: absolute;
     top: calc(100vh / 4);
-    left: calc(100vw / 4);
+    left: calc(100vw / 6);
   }
   p {
     font-size: 1.5rem;

@@ -35,7 +35,7 @@ const MenuStyles = styled.div`
 `
 
 const Menu = ({ data }) => (
-  <Layout>
+  <>
     <Seo title="Menu" />
     <MenuStyles>
       <StaticImage
@@ -72,7 +72,7 @@ const Menu = ({ data }) => (
         </nav>
       </div>
     </MenuStyles>
-  </Layout>
+  </>
 )
 
 export default Menu

@@ -6,7 +6,7 @@ import Layout from "../components/layout"
 import Seo from "../components/seo"
 import styled from "styled-components"
 
-const MenuStyles = styled.div`
+const MenuStyles = styled.main`
   /* max-width: 300px;
   margin: 0 auto; */
   li {
@@ -45,9 +45,9 @@ const Menu = ({ data }) => (
         layout="fullWidth"
       />
       <div className="menu">
-        <h2>
+        <h1>
           <mark>Update Stoke</mark>
-        </h2>
+        </h1>
         <p>
           <mark>Talking newspaper for those with sightloss</mark>
         </p>

@@ -36,7 +36,7 @@ const HeaderStyles = styled.header`
 const Header = ({ siteTitle }) => (
   <HeaderStyles>
     <div className="inner">
-      <Link to="/menu">
+      <Link to="/">
         <MdMenu size="45" />
       </Link>
 

@@ -5,12 +5,15 @@ import { StaticImage } from "gatsby-plugin-image"
 import Layout from "../components/layout"
 import Seo from "../components/seo"
 import styled from "styled-components"
+import "normalize.css"
+import GlobalStyles from "../styles/GlobalStyles"
+import Typography from "../styles/Typography"
 
 const MenuStyles = styled.main`
   /* max-width: 300px;
   margin: 0 auto; */
   li {
-    font-size: 1.5rem;
+    font-size: 2.5rem;
     margin-bottom: 1.2rem;
     font-weight: bold;
   }
@@ -25,17 +28,16 @@ const MenuStyles = styled.main`
     left: calc(100vw / 6);
   }
   p {
-    font-size: 1.5rem;
+    font-size: 2rem;
     line-height: 1.5;
-  }
-  a {
-    text-decoration: underline;
-    color: red;
+    font-weight: bold;
   }
 `
 
 const Menu = ({ data }) => (
   <>
+    <GlobalStyles />
+    <Typography />
     <Seo title="Menu" />
     <MenuStyles>
       <StaticImage

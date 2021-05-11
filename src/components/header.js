@@ -26,7 +26,7 @@ const HeaderStyles = styled.header`
     color: black;
     letter-spacing: 1.4px;
     text-decoration: none;
-    font-size: 1.3rem;
+    font-size: 3rem;
   }
   img {
     border-radius: 25%;

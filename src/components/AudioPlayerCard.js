@@ -16,7 +16,7 @@ const PlayerCardStyles = styled.div`
   flex-direction: column;
   align-items: center;
   width: 300px;
-  padding: 1.45rem;
+  padding: 2rem;
   margin: 0 auto;
   border-radius: 10%;
   background: black;
@@ -26,17 +26,24 @@ const PlayerCardStyles = styled.div`
     border-radius: 50%;
   }
   input[type="range"] {
-    height: 5px;
+    height: 0.5rem;
     -webkit-appearance: none;
     width: 100%;
-    margin-bottom: 10px;
+    margin-bottom: 2.5rem;
     border-radius: 8px;
     background: #3b7677;
     cursor: pointer;
   }
   .input-space {
-    height: 5px;
-    margin-bottom: 10px;
+    height: 0.5rem;
+    margin-bottom: 2.5rem;
+  }
+  .track-number {
+    background: yellow;
+    color: black;
+    font-size: 2.5rem;
+    font-weight: bold;
+    margin: 0 0 2.5rem;
   }
 `
 
@@ -44,7 +51,7 @@ const ControlStyles = styled.div`
   width: inherit;
   display: flex;
   justify-content: space-evenly;
-  margin-bottom: 1.45rem;
+  margin-bottom: 3rem;
 `
 
 const reducer = (state, action) => {
@@ -217,11 +224,11 @@ export default function AudioPlayerCard() {
         width={150}
         formats={["AUTO", "WEBP", "AVIF"]}
         alt="Headphones on a desk"
-        style={{ marginBottom: `1.45rem` }}
+        style={{ marginBottom: `2.5rem` }}
       />
-      <h2 style={{ background: "yellow", color: "black", padding: "5px" }}>
+      <p className="track-number">
         Track {state.currentTrackNum + 1} of {state.audioUrlList.length}
-      </h2>
+      </p>
       <ControlStyles>
         <IconContext.Provider
           value={{

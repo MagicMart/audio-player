@@ -7,12 +7,14 @@ const GlobalStyles = createGlobalStyle`
     --yellow: #ffc600;
     --white: #fff;
     --grey: #efefef;
+    --bg-colour: whitesmoke;
   }
 
  
   html {
     box-sizing: border-box;
     font-size: 10px;
+    background-color: var(--bg-colour)
   }
 
   *, *:before, *:after {

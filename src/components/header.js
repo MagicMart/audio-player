@@ -21,11 +21,11 @@ const HeaderStyles = styled.header`
     margin: 0;
   }
   a {
-    display: flex;
+    /* display: flex;
     align-items: center;
     color: black;
     letter-spacing: 1.4px;
-    text-decoration: none;
+    text-decoration: none; */
     font-size: 3rem;
   }
   img {
@@ -36,10 +36,6 @@ const HeaderStyles = styled.header`
 const Header = ({ siteTitle }) => (
   <HeaderStyles>
     <div className="inner">
-      <Link to="/">
-        <MdMenu size="45" />
-      </Link>
-
       <h1 style={{ display: "flex", alignItems: "center" }}>
         <Link to="/">
           <mark>{siteTitle}</mark>

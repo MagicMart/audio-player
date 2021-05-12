@@ -169,29 +169,47 @@ export default function AudioPlayerCard() {
     })
   }, [state.audioUrlList])
 
+  // React.useEffect(() => {
+  //   if (!state.audioElement) return
+  //   if (state.isPlaying) {
+  //     intervalID.current = setInterval(() => {
+  //       if (state.audioElement.ended) {
+  //         clearInterval(intervalID.current)
+  //         dispatch({
+  //           type: "UPDATE_AUDIO_ELEMENT",
+  //         })
+  //       }
+  //       dispatch({
+  //         type: "UPDATE_TRACKPROGRESS",
+  //         payload: state.audioElement.currentTime,
+  //       })
+  //     }, 500)
+  //   } else {
+  //     clearInterval(intervalID.current)
+  //   }
+  //   return () => {
+  //     state.audioElement.pause()
+  //     clearInterval(intervalID.current)
+  //   }
+  // }, [state.isPlaying, state.audioElement])
+
   React.useEffect(() => {
-    if (!state.audioElement) return
-    if (state.isPlaying) {
-      intervalID.current = setInterval(() => {
-        if (state.audioElement.ended) {
-          clearInterval(intervalID.current)
-          dispatch({
-            type: "UPDATE_AUDIO_ELEMENT",
-          })
-        }
+    function updateTrack() {
+      if (state.audioElement.ended) {
+        dispatch({ type: "UPDATE_AUDIO_ELEMENT" })
+      } else {
         dispatch({
           type: "UPDATE_TRACKPROGRESS",
           payload: state.audioElement.currentTime,
         })
-      }, 500)
-    } else {
-      clearInterval(intervalID.current)
+      }
     }
+    state.audioElement?.addEventListener("timeupdate", updateTrack)
     return () => {
-      state.audioElement.pause()
-      clearInterval(intervalID.current)
+      state.audioElement?.pause()
+      state.audioElement?.removeEventListener("timeupdate", updateTrack)
     }
-  }, [state.isPlaying, state.audioElement])
+  }, [state.audioElement])
 
   React.useEffect(() => {
     if (!state.audioElement) return

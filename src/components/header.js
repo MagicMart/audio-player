@@ -3,7 +3,6 @@ import PropTypes from "prop-types"
 import { Link } from "gatsby"
 import { StaticImage } from "gatsby-plugin-image"
 import styled from "styled-components"
-import { MdMenu } from "react-icons/md"
 
 const HeaderStyles = styled.header`
   background: whitesmoke;

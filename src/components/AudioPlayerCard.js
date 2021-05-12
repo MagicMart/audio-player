@@ -9,7 +9,7 @@ import {
 } from "react-icons/fa"
 import { IconContext } from "react-icons"
 import { graphql, useStaticQuery } from "gatsby"
-import { setItem, getItem } from "../utils/localStorage"
+// import { setItem, getItem } from "../utils/localStorage"
 
 const PlayerCardStyles = styled.div`
   display: flex;
@@ -149,7 +149,7 @@ export default function AudioPlayerCard() {
   React.useEffect(() => {
     let lastListenedTo
     const { storedAudioURL, storedTrackNum = 0 } =
-      JSON.parse(localStorage.getItem("updatestoke")) || {}
+      JSON.parse(window.localStorage.getItem("updatestoke")) || {}
     if (
       storedAudioURL &&
       storedAudioURL === state.audioUrlList[storedTrackNum]
@@ -204,10 +204,13 @@ export default function AudioPlayerCard() {
 
   React.useEffect(() => {
     if (!state.audioUrlList) return
-    setItem({
-      storedAudioURL: state.audioUrlList[state.currentTrackNum],
-      storedTrackNum: state.currentTrackNum,
-    })
+    window.localStorage.setItem(
+      "updatestoke",
+      JSON.stringify({
+        storedAudioURL: state.audioUrlList[state.currentTrackNum],
+        storedTrackNum: state.currentTrackNum,
+      })
+    )
   }, [state.audioUrlList, state.currentTrackNum])
 
   function handleRangeInput(e) {

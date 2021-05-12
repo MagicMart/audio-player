@@ -122,7 +122,6 @@ export default function AudioPlayerCard() {
     currentTrackNum: 0,
     audioUrlList: allS3Key.nodes.map(node => node.s3key),
     audioElement: null,
-    localStorage: typeof window !== "undefined" && getItem(),
   })
   const intervalID = useRef()
 
@@ -149,7 +148,8 @@ export default function AudioPlayerCard() {
 
   React.useEffect(() => {
     let lastListenedTo
-    const { storedAudioURL, storedTrackNum = 0 } = state.localStorage
+    const { storedAudioURL, storedTrackNum = 0 } =
+      JSON.parse(localStorage.getItem("updatestoke")) || {}
     if (
       storedAudioURL &&
       storedAudioURL === state.audioUrlList[storedTrackNum]
@@ -167,7 +167,7 @@ export default function AudioPlayerCard() {
         currentTrackNum: storedTrackNum,
       },
     })
-  }, [state.audioUrlList, state.localStorage])
+  }, [state.audioUrlList])
 
   React.useEffect(() => {
     if (!state.audioElement) return

@@ -262,7 +262,7 @@ export default function AudioPlayerCard() {
             tabIndex="0"
             aria-label="previous track"
           />
-          {state.isPlaying ? (
+          {!state.audioElement?.paused ? (
             <FaPauseCircle
               onClick={togglePlay}
               tabIndex="0"

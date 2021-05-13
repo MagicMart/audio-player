@@ -148,50 +148,26 @@ export default function AudioPlayerCard() {
 
   React.useEffect(() => {
     let lastListenedTo
-    const { storedAudioURL, storedTrackNum = 0 } =
+
+    const localStorage =
       JSON.parse(window.localStorage.getItem("updatestoke")) || {}
+    const { storedAudioURL, storedTrackNum = 0 } = localStorage
+
     if (
       storedAudioURL &&
       storedAudioURL === state.audioUrlList[storedTrackNum]
     ) {
       lastListenedTo = new Audio(state.audioUrlList[storedTrackNum])
-    } else {
-      lastListenedTo = new Audio(state.audioUrlList[0])
     }
-    // lastListenedTo = new Audio(state.audioUrlList[0])
-    // const storedTrackNum = 0
+
     dispatch({
       type: "INITIAL_AUDIO",
       payload: {
-        audioElement: lastListenedTo,
+        audioElement: lastListenedTo || new Audio(state.audioUrlList[0]),
         currentTrackNum: storedTrackNum,
       },
     })
   }, [state.audioUrlList])
-
-  // React.useEffect(() => {
-  //   if (!state.audioElement) return
-  //   if (state.isPlaying) {
-  //     intervalID.current = setInterval(() => {
-  //       if (state.audioElement.ended) {
-  //         clearInterval(intervalID.current)
-  //         dispatch({
-  //           type: "UPDATE_AUDIO_ELEMENT",
-  //         })
-  //       }
-  //       dispatch({
-  //         type: "UPDATE_TRACKPROGRESS",
-  //         payload: state.audioElement.currentTime,
-  //       })
-  //     }, 500)
-  //   } else {
-  //     clearInterval(intervalID.current)
-  //   }
-  //   return () => {
-  //     state.audioElement.pause()
-  //     clearInterval(intervalID.current)
-  //   }
-  // }, [state.isPlaying, state.audioElement])
 
   React.useEffect(() => {
     function updateTrack() {

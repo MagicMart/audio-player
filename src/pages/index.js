@@ -26,10 +26,18 @@ const MenuStyles = styled.main`
     top: calc(100vh / 4);
     left: calc(100vw / 6);
   }
-  p {
+
+  h1 {
     font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 2.5rem;
+    letter-spacing: 1.5px;
+  }
+  .update {
+    font-size: 3rem;
     line-height: 1.5;
     font-weight: bold;
+    margin-bottom: 1.5rem;
   }
 `
 
@@ -46,17 +54,17 @@ const Menu = ({ data }) => (
         layout="fullWidth"
       />
       <div className="menu">
-        <h1>
-          <mark>Update Stoke</mark>
-        </h1>
-        <p>
-          <mark>Talking newspaper for those with sightloss</mark>
+        <p className="update">
+          <mark>Update</mark>
         </p>
+        <h1>
+          <mark>Stoke's innovative talking newspaper</mark>
+        </h1>
         <nav>
           <ul>
             <li>
               <Link to="/audio">
-                <mark>Audio Player</mark>
+                <mark>Listen</mark>
               </Link>
             </li>
             <li>

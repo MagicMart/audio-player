@@ -262,14 +262,14 @@ export default function AudioPlayerCard() {
             tabIndex="0"
             aria-label="previous track"
           />
-          {!state.audioElement?.paused ? (
+          {state.audioElement?.paused ? (
+            <FaPlay onClick={togglePlay} tabIndex="0" aria-label="play audio" />
+          ) : (
             <FaPauseCircle
               onClick={togglePlay}
               tabIndex="0"
               aria-label="pause audio"
             />
-          ) : (
-            <FaPlay onClick={togglePlay} tabIndex="0" aria-label="play audio" />
           )}
 
           <FaStepForward

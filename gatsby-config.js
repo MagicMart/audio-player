@@ -18,8 +18,8 @@ module.exports = {
     {
       resolve: `gatsby-source-filesystem`,
       options: {
-        name: `markdown-news`,
-        path: `${__dirname}/src/markdown-news`,
+        name: `markdown-pages`,
+        path: `${__dirname}/src/markdown-pages`,
       },
     },
     `gatsby-transformer-remark`,

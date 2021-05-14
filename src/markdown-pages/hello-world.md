@@ -1,6 +1,7 @@
 ---
 title: "Hello World"
 date: "12-05-2021"
+slug: "news"
 ---
 
 ## Hello World

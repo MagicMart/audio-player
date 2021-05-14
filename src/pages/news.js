@@ -6,13 +6,7 @@ import Layout from "../components/layout"
 const NewsStyles = styled.div`
   max-width: 750px;
   margin: 0 auto;
-  h2,
-  time {
-    background: yellow;
-    color: black;
-    width: fit-content;
-    padding: 2px;
-  }
+  padding: 10px;
 `
 
 export default function News({ data }) {
@@ -32,7 +26,7 @@ export default function News({ data }) {
 
 export const query = graphql`
   {
-    news: markdownRemark {
+    news: markdownRemark(frontmatter: { slug: { eq: "news" } }) {
       html
       frontmatter {
         date

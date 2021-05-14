@@ -10,10 +10,10 @@ const HeaderStyles = styled.header`
   padding: 10px 0;
   .inner {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
     align-items: center;
     margin: 0 auto;
-    max-width: 300px;
+    max-width: 750px;
     /* padding: 1.45rem 1.0875rem; */
   }
   h1 {

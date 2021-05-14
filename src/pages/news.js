@@ -7,6 +7,9 @@ const NewsStyles = styled.div`
   max-width: 750px;
   margin: 0 auto;
   padding: 10px;
+  h2 {
+    color: red;
+  }
 `
 
 export default function News({ data }) {

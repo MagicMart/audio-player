@@ -4,7 +4,7 @@ date: "12-05-2021"
 slug: "about"
 ---
 
-## About
+# About
 
 !["Audio Equipment on a desk"](https://www.updatestoke.org/wp-content/uploads/2018/07/pexels-photo-265672-2.png)
 

@@ -21,8 +21,7 @@ export default function Template({
     <Layout>
       <PageStyles>
         <div className="blog-post">
-          <h1>{frontmatter.title}</h1>
-          <h2>{frontmatter.date}</h2>
+          <p>{frontmatter.date}</p>
           <div
             className="blog-post-content"
             dangerouslySetInnerHTML={{ __html: html }}

@@ -215,60 +215,69 @@ export default function AudioPlayerCard() {
   }
 
   return (
-    <PlayerCardStyles>
-      <StaticImage
-        src="../images/headphones.jpg"
-        width={150}
-        formats={["AUTO", "WEBP", "AVIF"]}
-        alt="Headphones on a desk"
-        style={{ marginBottom: `2.5rem` }}
-      />
-      <p className="track-number">
-        Track {state.currentTrackNum + 1} of {state.audioUrlList.length}
-      </p>
-      <ControlStyles>
-        <IconContext.Provider
-          value={{
-            color: "white",
-            size: "50px",
-          }}
-        >
-          <FaStepBackward
-            onClick={previous}
-            tabIndex="0"
-            aria-label="previous track"
-          />
-          {state.audioElement?.paused ? (
-            <FaPlay onClick={togglePlay} tabIndex="0" aria-label="play audio" />
-          ) : (
-            <FaPauseCircle
-              onClick={togglePlay}
-              tabIndex="0"
-              aria-label="pause audio"
-            />
-          )}
-
-          <FaStepForward
-            onClick={forward}
-            tabIndex="0"
-            aria-label="next track"
-          />
-        </IconContext.Provider>
-      </ControlStyles>
-      {!state.audioElement ||
-      isNaN(state.audioElement.duration) ||
-      state.audioElement.duration === +Infinity ? (
-        <div className="input-space"></div>
-      ) : (
-        <input
-          type="range"
-          min="0"
-          max={state.audioElement.duration}
-          step="1"
-          value={state.trackProgress}
-          onChange={handleRangeInput}
+    <>
+      <h1 style={{ fontSize: "2rem", fontWeight: "bold", textAlign: "center" }}>
+        Listen to Stoke's Update
+      </h1>
+      <PlayerCardStyles>
+        <StaticImage
+          src="../images/headphones.jpg"
+          width={150}
+          formats={["AUTO", "WEBP", "AVIF"]}
+          alt="Headphones on a desk"
+          style={{ marginBottom: `2.5rem` }}
         />
-      )}
-    </PlayerCardStyles>
+        <p className="track-number">
+          Track {state.currentTrackNum + 1} of {state.audioUrlList.length}
+        </p>
+        <ControlStyles>
+          <IconContext.Provider
+            value={{
+              color: "white",
+              size: "50px",
+            }}
+          >
+            <FaStepBackward
+              onClick={previous}
+              tabIndex="0"
+              aria-label="previous track"
+            />
+            {state.audioElement?.paused ? (
+              <FaPlay
+                onClick={togglePlay}
+                tabIndex="0"
+                aria-label="play audio"
+              />
+            ) : (
+              <FaPauseCircle
+                onClick={togglePlay}
+                tabIndex="0"
+                aria-label="pause audio"
+              />
+            )}
+
+            <FaStepForward
+              onClick={forward}
+              tabIndex="0"
+              aria-label="next track"
+            />
+          </IconContext.Provider>
+        </ControlStyles>
+        {!state.audioElement ||
+        isNaN(state.audioElement.duration) ||
+        state.audioElement.duration === +Infinity ? (
+          <div className="input-space"></div>
+        ) : (
+          <input
+            type="range"
+            min="0"
+            max={state.audioElement.duration}
+            step="1"
+            value={state.trackProgress}
+            onChange={handleRangeInput}
+          />
+        )}
+      </PlayerCardStyles>
+    </>
   )
 }

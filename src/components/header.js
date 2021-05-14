@@ -16,7 +16,7 @@ const HeaderStyles = styled.header`
     margin: 0 auto;
     max-width: 300px;
   }
-  h1 {
+  p {
     margin: 0;
     font-size: 4rem;
   }
@@ -36,9 +36,9 @@ const Header = ({ siteTitle }) => (
         alt=""
       />{" "}
       <Link to="/">
-        <h1>
+        <p>
           <mark>{siteTitle}</mark>
-        </h1>
+        </p>
       </Link>
     </div>
   </HeaderStyles>

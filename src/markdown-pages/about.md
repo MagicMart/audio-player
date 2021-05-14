@@ -1,7 +1,7 @@
 ---
 title: "About"
 date: "12-05-2021"
-slug: "about"
+slug: "/about"
 ---
 
 # About

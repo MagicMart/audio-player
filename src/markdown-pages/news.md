@@ -1,5 +1,5 @@
 ---
-title: "Hello World"
+title: "News"
 date: "12-05-2021"
 slug: "news"
 ---

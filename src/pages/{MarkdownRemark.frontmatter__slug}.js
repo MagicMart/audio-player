@@ -2,6 +2,7 @@ import React from "react"
 import { graphql } from "gatsby"
 import Layout from "../components/layout"
 import styled from "styled-components"
+import SEO from "../components/seo"
 
 const PageStyles = styled.div`
   max-width: 750px;
@@ -19,6 +20,7 @@ export default function Template({
   const { frontmatter, html } = markdownRemark
   return (
     <Layout>
+      <SEO title={frontmatter.title} />
       <PageStyles>
         <div className="blog-post">
           <p>{frontmatter.date}</p>

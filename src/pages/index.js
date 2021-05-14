@@ -63,17 +63,17 @@ const Menu = ({ data }) => (
         <nav>
           <ul>
             <li>
-              <Link to="/audio">
+              <Link to="/audio/">
                 <mark>Listen</mark>
               </Link>
             </li>
             <li>
-              <Link to="/news">
+              <Link to="/news/">
                 <mark>News</mark>
               </Link>
             </li>
             <li>
-              <Link to="/about">
+              <Link to="/about/">
                 <mark>About</mark>
               </Link>
             </li>

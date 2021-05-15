@@ -6,7 +6,7 @@ slug: "/about"
 
 # About
 
-!["Audio Equipment on a desk"](https://www.updatestoke.org/wp-content/uploads/2018/07/pexels-photo-265672-2.png)
+!["Audio Equipment on a desk"](/about.jpg)
 
 Update is Stoke on Trent’s Innovative Talking Newspaper and entertainment magazine.
 

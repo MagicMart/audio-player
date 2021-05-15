@@ -11,6 +11,9 @@ const PageStyles = styled.div`
   h1 {
     color: red;
   }
+  img {
+    width: 100%;
+  }
 `
 
 export default function Template({

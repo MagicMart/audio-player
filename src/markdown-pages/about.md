@@ -6,7 +6,7 @@ slug: "/about"
 
 # About
 
-!["Audio Equipment on a desk"](/about.jpg)
+!["Audio Equipment on a desk"](../images/about.jpg)
 
 Update is Stoke on Trent’s Innovative Talking Newspaper and entertainment magazine.
 

@@ -7,11 +7,16 @@ import styled from "styled-components"
 const HeaderStyles = styled.header`
   background: whitesmoke;
   padding: 10px 0;
-  .inner {
+  .logo {
     display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+  }
+  .inner {
+    /* display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    align-items: center;
+    align-items: center; */
     margin: 0 auto;
     max-width: 750px;
   }
@@ -21,10 +26,12 @@ const HeaderStyles = styled.header`
     padding: 0;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
+    justify-content: center;
+    align-items: center;
   }
   li {
-    padding: 0.5em;
+    padding: 0.25em;
+    /* padding-right: 0.5em; */
     font-size: 2.5rem;
   }
   img {
@@ -39,17 +46,19 @@ const HeaderStyles = styled.header`
 const Header = ({ siteTitle }) => (
   <HeaderStyles>
     <div className="inner">
-      <StaticImage
-        src="../images/updatelogo.png"
-        width={40}
-        quality={100}
-        formats={["AUTO", "WEBP", "AVIF"]}
-        alt=""
-      />
+      <div className="logo">
+        <StaticImage
+          src="../images/updatelogo.png"
+          width={40}
+          quality={100}
+          formats={["AUTO", "WEBP", "AVIF"]}
+          alt=""
+        />
+      </div>
       <ul>
         <li>
           <Link to="/" activeClassName="active">
-            {siteTitle}
+            update
           </Link>
         </li>
         <li>

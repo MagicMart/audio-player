@@ -4,7 +4,7 @@ date: "12-05-2021"
 slug: "/about"
 ---
 
-# About
+# About Update
 
 !["Audio Equipment on a desk"](../images/about.jpg)
 

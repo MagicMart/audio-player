@@ -1,7 +1,7 @@
 module.exports = {
   siteMetadata: {
-    title: `Update`,
-    description: `Stoke's innovative talking newspaper.`,
+    title: `Update Audio News`,
+    description: `Stoke's talking newspaper.`,
     author: `@martintudoruk`,
     siteURL: `https://audio.martintudor.com`,
   },

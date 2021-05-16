@@ -7,11 +7,6 @@ import styled from "styled-components"
 const HeaderStyles = styled.header`
   background: whitesmoke;
   padding: 10px 0;
-  .logo {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 10px;
-  }
   .inner {
     /* display: flex;
     flex-wrap: wrap;
@@ -46,16 +41,16 @@ const HeaderStyles = styled.header`
 const Header = ({ siteTitle }) => (
   <HeaderStyles>
     <div className="inner">
-      <div className="logo">
-        <StaticImage
-          src="../images/updatelogo.png"
-          width={40}
-          quality={100}
-          formats={["AUTO", "WEBP", "AVIF"]}
-          alt=""
-        />
-      </div>
       <ul>
+        <li>
+          <StaticImage
+            src="../images/updatelogo.png"
+            width={40}
+            quality={100}
+            formats={["AUTO", "WEBP", "AVIF"]}
+            alt=""
+          />
+        </li>
         <li>
           <Link to="/" activeClassName="active">
             update

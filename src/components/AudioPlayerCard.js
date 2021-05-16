@@ -217,7 +217,7 @@ export default function AudioPlayerCard() {
   return (
     <>
       <h1 style={{ fontSize: "2rem", fontWeight: "bold", textAlign: "center" }}>
-        Listen to Stoke's Update
+        Stoke's Talking News
       </h1>
       <PlayerCardStyles>
         <StaticImage

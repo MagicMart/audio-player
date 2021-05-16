@@ -8,20 +8,29 @@ const HeaderStyles = styled.header`
   background: whitesmoke;
   padding: 10px 0;
   .inner {
-    display: grid;
-    grid-template-columns: auto auto;
+    display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    grid-column-gap: 10px;
     margin: 0 auto;
-    max-width: 300px;
+    max-width: 750px;
   }
-  p {
+  ul {
+    list-style: none;
     margin: 0;
-    font-size: 4rem;
+    padding: 0;
+    display: flex;
+  }
+  li {
+    margin-left: 10px;
+    font-size: 2.5rem;
   }
   img {
     border-radius: 25%;
+  }
+  .active {
+    background: yellow;
+    color: black;
   }
 `
 
@@ -30,16 +39,28 @@ const Header = ({ siteTitle }) => (
     <div className="inner">
       <StaticImage
         src="../images/updatelogo.png"
-        width={50}
+        width={40}
         quality={100}
         formats={["AUTO", "WEBP", "AVIF"]}
         alt=""
-      />{" "}
-      <Link to="/">
-        <p>
-          <mark>{siteTitle}</mark>
-        </p>
-      </Link>
+      />
+      <ul>
+        <li>
+          <Link to="/" activeClassName="active">
+            {siteTitle}
+          </Link>
+        </li>
+        <li>
+          <Link to="/audio/" activeClassName="active">
+            listen
+          </Link>
+        </li>
+        <li>
+          <Link to="/about/" activeClassName="active">
+            about
+          </Link>
+        </li>
+      </ul>
     </div>
   </HeaderStyles>
 )

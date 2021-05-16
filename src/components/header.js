@@ -20,9 +20,11 @@ const HeaderStyles = styled.header`
     margin: 0;
     padding: 0;
     display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
   }
   li {
-    margin-left: 10px;
+    padding: 0.5em;
     font-size: 2.5rem;
   }
   img {
@@ -53,6 +55,11 @@ const Header = ({ siteTitle }) => (
         <li>
           <Link to="/audio/" activeClassName="active">
             listen
+          </Link>
+        </li>
+        <li>
+          <Link to="/news/" activeClassName="active">
+            news
           </Link>
         </li>
         <li>

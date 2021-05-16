@@ -47,6 +47,13 @@ const PlayerCardStyles = styled.div`
   }
 `
 
+const H1 = styled.h1`
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 1rem;
+`
+
 const ControlStyles = styled.div`
   width: inherit;
   display: flex;
@@ -216,9 +223,7 @@ export default function AudioPlayerCard() {
 
   return (
     <>
-      <h1 style={{ fontSize: "2rem", fontWeight: "bold", textAlign: "center" }}>
-        Stoke's Talking News
-      </h1>
+      <H1>Update Audio News</H1>
       <PlayerCardStyles>
         <StaticImage
           src="../images/headphones.jpg"

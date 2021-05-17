@@ -26,7 +26,7 @@ export default function Template({
       <SEO title={frontmatter.title} />
       <PageStyles>
         <div className="blog-post">
-          <p>{frontmatter.date}</p>
+          <time>{frontmatter.date}</time>
           <div
             className="blog-post-content"
             dangerouslySetInnerHTML={{ __html: html }}
@@ -42,7 +42,7 @@ export const pageQuery = graphql`
     markdownRemark(id: { eq: $id }) {
       html
       frontmatter {
-        date
+        date(formatString: "MMMM DD, YYYY")
         slug
         title
       }

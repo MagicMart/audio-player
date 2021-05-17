@@ -64,7 +64,12 @@ const Menu = ({ data }) => (
           <ul>
             <li>
               <Link to="/audio/">
-                <mark>Listen</mark>
+                <mark>Update Player</mark>
+              </Link>
+            </li>
+            <li>
+              <Link to="/soundcloud/">
+                <mark>Soundcloud Player</mark>
               </Link>
             </li>
             <li>

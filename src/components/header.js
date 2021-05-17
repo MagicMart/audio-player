@@ -53,12 +53,12 @@ const Header = ({ siteTitle }) => (
         </li>
         <li>
           <Link to="/" activeClassName="active">
-            update
+            home
           </Link>
         </li>
         <li>
           <Link to="/audio/" activeClassName="active">
-            listen
+            update
           </Link>
         </li>
         <li>

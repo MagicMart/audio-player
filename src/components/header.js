@@ -71,6 +71,11 @@ const Header = ({ siteTitle }) => (
             about
           </Link>
         </li>
+        <li>
+          <Link to="/soundcloud/" activeClassName="active">
+            soundcloud
+          </Link>
+        </li>
       </ul>
     </div>
   </HeaderStyles>

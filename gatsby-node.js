@@ -19,7 +19,7 @@ async function fetchS3ObjectKeysAndTurnIntoNodes({
   const s3keys = await res.json()
   s3keys.forEach((s3keyRaw, i) => {
     s3key =
-      "https://d30v8sqsz26dxk.cloudfront.net/" + s3keyRaw.replace(" ", "+")
+      "https://d30v8sqsz26dxk.cloudfront.net/" + s3keyRaw.replace(/ /g, "+")
     s3key = s3key.replace("/audio", "")
     const nodeMeta = {
       id: createNodeId(`key-${s3key}`),

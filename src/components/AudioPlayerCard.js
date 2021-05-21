@@ -171,7 +171,7 @@ export default function AudioPlayerCard() {
       type: "INITIAL_AUDIO",
       payload: {
         audioElement: lastListenedTo || new Audio(state.audioUrlList[0]),
-        currentTrackNum: storedTrackNum,
+        currentTrackNum: lastListenedTo ? storedTrackNum : 0,
       },
     })
   }, [state.audioUrlList])

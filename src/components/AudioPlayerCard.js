@@ -113,24 +113,28 @@ const reducer = (state, action) => {
 }
 
 export default function AudioPlayerCard() {
-  const { allS3Key } = useStaticQuery(graphql`
-    query S3Keys {
-      allS3Key {
-        nodes {
-          id
-          s3key
+  const { audio } = useStaticQuery(graphql`
+    {
+      audio: allFile(filter: { sourceInstanceName: { eq: "audio" } }) {
+        edges {
+          node {
+            dir
+            extension
+            name
+            publicURL
+          }
         }
       }
     }
   `)
+
   const [state, dispatch] = React.useReducer(reducer, {
     isPlaying: false,
     trackProgress: 0,
     currentTrackNum: 0,
-    audioUrlList: allS3Key.nodes.map(node => node.s3key),
+    audioUrlList: audio.edges.map(obj => obj.node.publicURL),
     audioElement: null,
   })
-  const intervalID = useRef()
 
   function togglePlay() {
     if (!state.audioElement) return

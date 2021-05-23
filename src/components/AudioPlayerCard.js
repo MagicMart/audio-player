@@ -1,5 +1,5 @@
 import { StaticImage } from "gatsby-plugin-image"
-import React, { useRef } from "react"
+import React from "react"
 import styled from "styled-components"
 import {
   FaPlay,
@@ -113,26 +113,21 @@ const reducer = (state, action) => {
 }
 
 export default function AudioPlayerCard() {
-  const { audio } = useStaticQuery(graphql`
-    {
-      audio: allFile(filter: { sourceInstanceName: { eq: "audio" } }) {
-        edges {
-          node {
-            dir
-            extension
-            name
-            publicURL
-          }
+  const { allS3Key } = useStaticQuery(graphql`
+    query S3Keys {
+      allS3Key {
+        nodes {
+          id
+          s3key
         }
       }
     }
   `)
-
   const [state, dispatch] = React.useReducer(reducer, {
     isPlaying: false,
     trackProgress: 0,
     currentTrackNum: 0,
-    audioUrlList: audio.edges.map(obj => obj.node.publicURL),
+    audioUrlList: allS3Key.nodes.map(node => node.s3key),
     audioElement: null,
   })
 

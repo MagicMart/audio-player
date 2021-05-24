@@ -14,9 +14,10 @@ async function fetchS3ObjectKeysAndTurnIntoNodes({
   createContentDigest,
 }) {
   const res = await fetch(
-    "https://8leyxwecz7.execute-api.eu-west-2.amazonaws.com/"
+    "https://8leyxwecz7.execute-api.eu-west-2.amazonaws.com/updateS3"
   )
   const s3keys = await res.json()
+  console.log("s3Keys", s3keys)
   s3keys.forEach((s3keyRaw, i) => {
     s3key =
       "https://d30v8sqsz26dxk.cloudfront.net/" + s3keyRaw.replace(/ /g, "+")

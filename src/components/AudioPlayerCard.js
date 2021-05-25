@@ -113,12 +113,13 @@ const reducer = (state, action) => {
 }
 
 export default function AudioPlayerCard() {
-  const { allS3Key } = useStaticQuery(graphql`
-    query S3Keys {
-      allS3Key {
-        nodes {
-          id
-          s3key
+  const { sanityMp3 } = useStaticQuery(graphql`
+    query mp3 {
+      sanityMp3 {
+        tracks {
+          asset {
+            url
+          }
         }
       }
     }
@@ -127,7 +128,7 @@ export default function AudioPlayerCard() {
     isPlaying: false,
     trackProgress: 0,
     currentTrackNum: 0,
-    audioUrlList: allS3Key.nodes.map(node => node.s3key),
+    audioUrlList: sanityMp3.tracks.map(track => track.asset.url),
     audioElement: null,
   })
 

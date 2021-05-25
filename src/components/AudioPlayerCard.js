@@ -133,7 +133,7 @@ export default function AudioPlayerCard() {
   })
 
   function togglePlay() {
-    if (!state.audioElement) return
+    if (!state.audioElement || state.audioElement.readyState !== 4) return
     dispatch({ type: "TOGGLE_PLAY" })
   }
 

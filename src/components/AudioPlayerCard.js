@@ -197,7 +197,11 @@ export default function AudioPlayerCard() {
   React.useEffect(() => {
     if (!state.audioElement) return
     if (state.isPlaying) {
-      state.audioElement.play()
+      // for slow networks, pause to check if playable
+      setTimeout(() => {
+        if (state.audioElement.readyState === 4) state.audioElement.play()
+        else dispatch({ type: "TOGGLE_PLAY" })
+      }, 1000)
     } else {
       state.audioElement.pause()
     }

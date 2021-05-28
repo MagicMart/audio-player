@@ -113,13 +113,12 @@ const reducer = (state, action) => {
 }
 
 export default function AudioPlayerCard() {
-  const { sanityMp3 } = useStaticQuery(graphql`
-    query mp3 {
-      sanityMp3 {
-        tracks {
-          asset {
-            url
-          }
+  const { allS3Key } = useStaticQuery(graphql`
+    query S3Keys {
+      allS3Key {
+        nodes {
+          id
+          s3key
         }
       }
     }
@@ -128,10 +127,9 @@ export default function AudioPlayerCard() {
     isPlaying: false,
     trackProgress: 0,
     currentTrackNum: 0,
-    audioUrlList: sanityMp3.tracks.map(track => track.asset.url),
+    audioUrlList: allS3Key.nodes.map(node => node.s3key),
     audioElement: null,
   })
-
   function togglePlay() {
     if (!state.audioElement || state.audioElement.readyState !== 4) return
     dispatch({ type: "TOGGLE_PLAY" })
@@ -197,11 +195,7 @@ export default function AudioPlayerCard() {
   React.useEffect(() => {
     if (!state.audioElement) return
     if (state.isPlaying) {
-      // for slow networks, pause to check if playable
-      setTimeout(() => {
-        if (state.audioElement.readyState === 4) state.audioElement.play()
-        else dispatch({ type: "TOGGLE_PLAY" })
-      }, 1000)
+      state.audioElement.play()
     } else {
       state.audioElement.pause()
     }

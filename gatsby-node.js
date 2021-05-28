@@ -17,21 +17,21 @@ async function fetchS3ObjectKeysAndTurnIntoNodes({
     "https://8leyxwecz7.execute-api.eu-west-2.amazonaws.com/update"
   )
   const s3keys = await res.json()
-  console.log("s3Keys", s3keys)
-  s3keys.forEach((s3keyRaw, i) => {
-    s3key = "https://d30v8sqsz26dxk.cloudfront.net/" + s3keyRaw
+
+  s3keys.forEach((s3key, i) => {
+    endpoint = "https://d30v8sqsz26dxk.cloudfront.net/" + s3key
     const nodeMeta = {
-      id: createNodeId(`key-${s3key}`),
+      id: createNodeId(`key-${endpoint}`),
       parent: null,
       children: [],
       internal: {
         type: "S3key",
         mediaType: "application/json",
-        contentDigest: createContentDigest(s3key),
+        contentDigest: createContentDigest(endpoint),
       },
     }
     actions.createNode({
-      s3key,
+      endpoint,
       ...nodeMeta,
     })
   })

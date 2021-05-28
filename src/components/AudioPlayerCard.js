@@ -137,13 +137,13 @@ export default function AudioPlayerCard() {
 
   function forward() {
     if (!state.audioElement) return
-    if (state.isPlaying) state.audioElement.pause()
+    state.audioElement.pause()
     dispatch({ type: "UPDATE_AUDIO_ELEMENT" })
   }
 
   function previous() {
     if (!state.audioElement) return
-    if (state.isPlaying && state.currentTrackNum > 0) {
+    if (state.currentTrackNum > 0) {
       state.audioElement.pause()
     } else {
       state.audioElement.currentTime = 0

@@ -19,7 +19,7 @@ async function fetchS3ObjectKeysAndTurnIntoNodes({
   const s3keys = await res.json()
 
   s3keys.forEach((s3key, i) => {
-    endpoint = "https://d30v8sqsz26dxk.cloudfront.net/" + s3key
+    const endpoint = "https://d30v8sqsz26dxk.cloudfront.net/" + s3key
     const nodeMeta = {
       id: createNodeId(`key-${endpoint}`),
       parent: null,

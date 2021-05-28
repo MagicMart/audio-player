@@ -118,7 +118,7 @@ export default function AudioPlayerCard() {
       allS3Key {
         nodes {
           id
-          s3key
+          endpoint
         }
       }
     }
@@ -127,7 +127,7 @@ export default function AudioPlayerCard() {
     isPlaying: false,
     trackProgress: 0,
     currentTrackNum: 0,
-    audioUrlList: allS3Key.nodes.map(node => node.s3key),
+    audioUrlList: allS3Key.nodes.map(node => node.endpoint),
     audioElement: null,
   })
   function togglePlay() {

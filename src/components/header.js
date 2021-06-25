@@ -27,7 +27,7 @@ const HeaderStyles = styled.header`
   li {
     padding: 0.25em;
     /* padding-right: 0.5em; */
-    font-size: 2.5rem;
+    font-size: 2rem;
   }
   img {
     border-radius: 25%;

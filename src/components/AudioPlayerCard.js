@@ -131,25 +131,25 @@ export default function AudioPlayerCard() {
     audioUrlList: allS3Key.nodes.map(node => node.endpoint),
     audioElement: null,
   })
-  function togglePlay() {
+  const togglePlay = React.useCallback(() => {
     if (!state.audioElement || state.audioElement.readyState !== 4) return
     dispatch({ type: "TOGGLE_PLAY" })
-  }
+  }, [state.audioElement])
 
-  function forward() {
+  const forward = React.useCallback(() => {
     if (!state.audioElement) return
     // state.audioElement.pause()
     dispatch({ type: "UPDATE_AUDIO_ELEMENT" })
-  }
+  }, [state.audioElement])
 
-  function previous() {
+  const previous = React.useCallback(() => {
     if (!state.audioElement) return
     // if (state.currentTrackNum === 0) {
     //   state.audioElement.currentTime = 0
     //   return
     // }
     dispatch({ type: "PREVIOUS" })
-  }
+  }, [state.audioElement])
 
   React.useEffect(() => {
     let lastListenedTo
@@ -211,6 +211,18 @@ export default function AudioPlayerCard() {
       })
     )
   }, [state.audioUrlList, state.currentTrackNum])
+
+  React.useEffect(() => {
+    if (!state.audioElement) return
+    const controls = e => {
+      // console.log(e)
+      if (e.code === "Space") togglePlay()
+      if (e.code === "ArrowLeft") previous()
+      if (e.code === "ArrowRight") forward()
+    }
+    window.document.addEventListener("keydown", controls)
+    return () => window.document.removeEventListener("keydown", controls)
+  }, [state.audioElement, togglePlay, previous, forward])
 
   function handleRangeInput(e) {
     if (!state.audioElement) return

@@ -103,6 +103,7 @@ const reducer = (state, action) => {
         // if (state.isPlaying) state.audioElement.currentTime = 0
         return {
           ...state,
+          audioElement: new Audio(state.audioUrlList[0]),
           trackProgress: 0,
         }
       }
@@ -137,17 +138,16 @@ export default function AudioPlayerCard() {
 
   function forward() {
     if (!state.audioElement) return
-    state.audioElement.pause()
+    // state.audioElement.pause()
     dispatch({ type: "UPDATE_AUDIO_ELEMENT" })
   }
 
   function previous() {
     if (!state.audioElement) return
-    if (state.currentTrackNum > 0) {
-      state.audioElement.pause()
-    } else {
-      state.audioElement.currentTime = 0
-    }
+    // if (state.currentTrackNum === 0) {
+    //   state.audioElement.currentTime = 0
+    //   return
+    // }
     dispatch({ type: "PREVIOUS" })
   }
 
@@ -195,7 +195,7 @@ export default function AudioPlayerCard() {
   React.useEffect(() => {
     if (!state.audioElement) return
     if (state.isPlaying) {
-      state.audioElement.play()
+      state.audioElement.play().catch(err => console.log(err))
     } else {
       state.audioElement.pause()
     }

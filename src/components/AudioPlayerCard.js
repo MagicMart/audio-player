@@ -213,7 +213,6 @@ export default function AudioPlayerCard() {
   }, [state.audioUrlList, state.currentTrackNum])
 
   React.useEffect(() => {
-    if (!state.audioElement) return
     const controls = e => {
       // console.log(e)
       if (e.code === "Space") togglePlay()
@@ -222,7 +221,7 @@ export default function AudioPlayerCard() {
     }
     window.document.addEventListener("keydown", controls)
     return () => window.document.removeEventListener("keydown", controls)
-  }, [state.audioElement, togglePlay, previous, forward])
+  }, [togglePlay, previous, forward])
 
   function handleRangeInput(e) {
     if (!state.audioElement) return

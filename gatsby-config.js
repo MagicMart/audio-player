@@ -6,7 +6,7 @@ module.exports = {
     description: `Stoke's talking newspaper.`,
     author: `@martintudoruk`,
     siteURL: `https://audio.martintudor.com`,
-    siteImage: `/images/updatelogo.png`,
+    siteImage: `src/images/updatelogo.png`,
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
@@ -52,7 +52,7 @@ module.exports = {
         background_color: `#663399`,
         theme_color: `#663399`,
         display: `minimal-ui`,
-        icon: `/images/updatelogo.png`, // This path is relative to the root of the site.
+        icon: `src/images/updatelogo.png`, // This path is relative to the root of the site.
       },
     },
     {

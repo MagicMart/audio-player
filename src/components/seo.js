@@ -20,6 +20,7 @@ function Seo({ description, lang, meta, title, image }) {
             description
             author
             siteURL
+            siteImage
           }
         }
       }
@@ -28,7 +29,7 @@ function Seo({ description, lang, meta, title, image }) {
 
   const metaDescription = description || site.siteMetadata.description
   const defaultTitle = site.siteMetadata?.title
-  const metaImage = image || `/matt-botsford-OKLqGsCT8qs-unsplash.png`
+  const metaImage = image || site.siteMetadata.siteImage
 
   return (
     <Helmet

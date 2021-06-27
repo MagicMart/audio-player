@@ -6,7 +6,6 @@ module.exports = {
     description: `Stoke's talking newspaper.`,
     author: `@martintudoruk`,
     siteURL: `https://audio.martintudor.com`,
-    siteImage: `src/images/updatelogo.png`,
   },
   plugins: [
     `gatsby-plugin-react-helmet`,

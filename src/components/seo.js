@@ -11,17 +11,19 @@ import { Helmet } from "react-helmet"
 import { useStaticQuery, graphql } from "gatsby"
 
 function Seo({ description, lang, meta, title, image }) {
-  const { site } = useStaticQuery(
+  const { site, file } = useStaticQuery(
     graphql`
-      query {
+      query SiteQuery {
         site {
           siteMetadata {
             title
             description
             author
             siteURL
-            siteImage
           }
+        }
+        file(name: { eq: "updatelogo" }) {
+          publicURL
         }
       }
     `
@@ -29,7 +31,7 @@ function Seo({ description, lang, meta, title, image }) {
 
   const metaDescription = description || site.siteMetadata.description
   const defaultTitle = site.siteMetadata?.title
-  const metaImage = image || site.siteMetadata.siteImage
+  const metaImage = file.publicURL || image || ""
 
   return (
     <Helmet

@@ -31,6 +31,7 @@ function Seo({ description, lang, meta, title, image }) {
 
   const metaDescription = description || site.siteMetadata.description
   const defaultTitle = site.siteMetadata?.title
+  const siteURL = site.siteMetadata.siteURL
   const metaImage = file.publicURL || image || ""
 
   return (
@@ -75,7 +76,7 @@ function Seo({ description, lang, meta, title, image }) {
         },
         {
           property: `og:image`,
-          content: metaImage,
+          content: `${siteURL}/` + metaImage,
         },
       ].concat(meta)}
     />

@@ -69,6 +69,10 @@ function Seo({ description, lang, meta, title }) {
           name: `twitter:description`,
           content: metaDescription,
         },
+        {
+          property: `og:image`,
+          content: `/matt-botsford-OKLqGsCT8qs-unsplash.png`,
+        },
       ].concat(meta)}
     />
   )

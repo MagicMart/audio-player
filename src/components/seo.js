@@ -76,7 +76,7 @@ function Seo({ description, lang, meta, title, image }) {
         },
         {
           property: `og:image`,
-          content: `${siteURL}/` + metaImage,
+          content: `${siteURL}` + metaImage,
         },
       ].concat(meta)}
     />
